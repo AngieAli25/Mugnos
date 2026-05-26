@@ -2,19 +2,11 @@ import { useEffect, useRef, useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight, Phone, Mail, MapPin, ArrowUpRight, ArrowDown, Calendar } from 'lucide-react'
+import { ArrowRight, Phone, Mail, MapPin, ArrowUpRight, ArrowDown, Calendar, Search, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { EVENTS, type EventType } from '../data/events'
 
 gsap.registerPlugin(ScrollTrigger)
-
-const TYPES: ('Tutti' | EventType)[] = [
-  'Tutti',
-  'Convegno Nazionale',
-  'Convegno Internazionale',
-  'Workshop',
-  'Fiera',
-]
 
 type SortKey = 'recent' | 'oldest' | 'az'
 
@@ -24,19 +16,70 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: 'az', label: 'Alfabetico A–Z' },
 ]
 
+type Filters = {
+  search: string
+  year: number | null
+  type: EventType | null
+  country: string | null
+  role: string | null
+  sort: SortKey
+}
+
+const INITIAL_FILTERS: Filters = {
+  search: '',
+  year: null,
+  type: null,
+  country: null,
+  role: null,
+  sort: 'recent',
+}
+
+type MenuKey = 'year' | 'type' | 'country' | 'role' | 'sort'
+
 export function Eventi() {
   const mainRef = useRef<HTMLDivElement>(null)
   const cursorRef = useRef<HTMLDivElement>(null)
   const followerRef = useRef<HTMLDivElement>(null)
+  const filterBarRef = useRef<HTMLDivElement>(null)
 
-  const [activeType, setActiveType] = useState<'Tutti' | EventType>('Tutti')
-  const [sortBy, setSortBy] = useState<SortKey>('recent')
-  const [sortOpen, setSortOpen] = useState(false)
+  const [filters, setFilters] = useState<Filters>(INITIAL_FILTERS)
+  const [openMenu, setOpenMenu] = useState<MenuKey | null>(null)
+
+  const years = useMemo(
+    () => Array.from(new Set(EVENTS.map((e) => e.year))).sort((a, b) => b - a),
+    []
+  )
+  const types = useMemo(
+    () => Array.from(new Set(EVENTS.map((e) => e.type))).sort((a, b) => a.localeCompare(b, 'it')),
+    []
+  )
+  const countries = useMemo(
+    () =>
+      Array.from(new Set(EVENTS.map((e) => e.country).filter((c): c is string => Boolean(c)))).sort(
+        (a, b) => a.localeCompare(b, 'it')
+      ),
+    []
+  )
+  const roles = useMemo(
+    () => Array.from(new Set(EVENTS.map((e) => e.role))).sort((a, b) => a.localeCompare(b, 'it')),
+    []
+  )
 
   const filtered = useMemo(() => {
-    const base = activeType === 'Tutti' ? EVENTS : EVENTS.filter((e) => e.type === activeType)
+    const q = filters.search.trim().toLowerCase()
+    const base = EVENTS.filter((e) => {
+      if (filters.year !== null && e.year !== filters.year) return false
+      if (filters.type && e.type !== filters.type) return false
+      if (filters.country && e.country !== filters.country) return false
+      if (filters.role && e.role !== filters.role) return false
+      if (q) {
+        const hay = `${e.title} ${e.location} ${e.country ?? ''} ${e.role} ${e.type} ${e.description.join(' ')}`.toLowerCase()
+        if (!hay.includes(q)) return false
+      }
+      return true
+    })
     const sorted = [...base]
-    switch (sortBy) {
+    switch (filters.sort) {
       case 'recent':
         sorted.sort((a, b) => b.year - a.year)
         break
@@ -48,7 +91,30 @@ export function Eventi() {
         break
     }
     return sorted
-  }, [activeType, sortBy])
+  }, [filters])
+
+  const hasActiveFilters =
+    filters.search.trim() !== '' ||
+    filters.year !== null ||
+    filters.type !== null ||
+    filters.country !== null ||
+    filters.role !== null
+
+  const updateFilter = <K extends keyof Filters>(key: K, value: Filters[K]) => {
+    setFilters((prev) => ({ ...prev, [key]: value }))
+  }
+  const resetFilters = () => setFilters({ ...INITIAL_FILTERS, sort: filters.sort })
+  const toggleMenu = (k: MenuKey) => setOpenMenu((prev) => (prev === k ? null : k))
+
+  useEffect(() => {
+    if (!openMenu) return
+    const onClick = (e: MouseEvent) => {
+      if (!filterBarRef.current) return
+      if (!filterBarRef.current.contains(e.target as Node)) setOpenMenu(null)
+    }
+    document.addEventListener('mousedown', onClick)
+    return () => document.removeEventListener('mousedown', onClick)
+  }, [openMenu])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -76,15 +142,6 @@ export function Eventi() {
     }
     window.addEventListener('mousemove', move)
     return () => window.removeEventListener('mousemove', move)
-  }, [])
-
-  const counts = useMemo(() => {
-    const c: Record<string, number> = { Tutti: EVENTS.length }
-    for (const t of TYPES) {
-      if (t === 'Tutti') continue
-      c[t] = EVENTS.filter((e) => e.type === t).length
-    }
-    return c
   }, [])
 
   return (
@@ -135,61 +192,130 @@ export function Eventi() {
         {/* FILTER + GRID */}
         <section className="section-padding" style={{ background: 'var(--bg-primary)' }}>
           <div className="container">
-            <div className="filter-bar reveal">
-              <div className="filter-chips">
-                {TYPES.map((t) => (
-                  <button
-                    key={t}
-                    className={`filter-chip ${activeType === t ? 'active' : ''}`}
-                    onClick={() => setActiveType(t)}
-                  >
-                    <span>{t}</span>
-                    <span className="chip-count">{counts[t] ?? 0}</span>
+            <div className="filter-bar reveal" ref={filterBarRef}>
+              <div className="search-wrap">
+                <Search size={16} className="search-icon" />
+                <input
+                  type="text"
+                  className="search-input"
+                  placeholder="Cerca per titolo, luogo, ruolo, parola chiave…"
+                  value={filters.search}
+                  onChange={(e) => updateFilter('search', e.target.value)}
+                />
+                {filters.search && (
+                  <button className="search-clear" onClick={() => updateFilter('search', '')} aria-label="Cancella ricerca">
+                    <X size={14} />
                   </button>
-                ))}
+                )}
               </div>
-              <div className="sort-wrap">
-                <button
-                  className="sort-trigger"
-                  onClick={() => setSortOpen((v) => !v)}
-                  onBlur={() => setTimeout(() => setSortOpen(false), 120)}
-                >
-                  <span className="sort-label-prefix">Ordina:</span>
-                  <span className="sort-current">{SORT_OPTIONS.find((s) => s.key === sortBy)?.label}</span>
-                  <ArrowDown size={14} className={`sort-chevron ${sortOpen ? 'open' : ''}`} />
-                </button>
-                <AnimatePresence>
-                  {sortOpen && (
-                    <motion.ul
-                      className="sort-menu"
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.18, ease: 'easeOut' }}
-                    >
-                      {SORT_OPTIONS.map((opt) => (
-                        <li key={opt.key}>
-                          <button
-                            className={`sort-option ${sortBy === opt.key ? 'active' : ''}`}
-                            onMouseDown={() => {
-                              setSortBy(opt.key)
-                              setSortOpen(false)
-                            }}
-                          >
-                            {opt.label}
-                          </button>
-                        </li>
-                      ))}
-                    </motion.ul>
+
+              <div className="filter-row">
+                <FilterDropdown
+                  label="Anno"
+                  value={filters.year !== null ? String(filters.year) : null}
+                  open={openMenu === 'year'}
+                  onToggle={() => toggleMenu('year')}
+                  options={[
+                    { value: null, label: 'Tutti gli anni' },
+                    ...years.map((y) => ({ value: String(y), label: String(y) })),
+                  ]}
+                  onSelect={(v) => {
+                    updateFilter('year', v === null ? null : Number(v))
+                    setOpenMenu(null)
+                  }}
+                />
+                <FilterDropdown
+                  label="Tipologia"
+                  value={filters.type}
+                  open={openMenu === 'type'}
+                  onToggle={() => toggleMenu('type')}
+                  options={[
+                    { value: null, label: 'Tutte le tipologie' },
+                    ...types.map((t) => ({ value: t, label: t })),
+                  ]}
+                  onSelect={(v) => {
+                    updateFilter('type', v as EventType | null)
+                    setOpenMenu(null)
+                  }}
+                />
+                <FilterDropdown
+                  label="Paese"
+                  value={filters.country}
+                  open={openMenu === 'country'}
+                  onToggle={() => toggleMenu('country')}
+                  options={[
+                    { value: null, label: 'Tutti i paesi' },
+                    ...countries.map((c) => ({ value: c, label: c })),
+                  ]}
+                  onSelect={(v) => {
+                    updateFilter('country', v)
+                    setOpenMenu(null)
+                  }}
+                />
+                <FilterDropdown
+                  label="Ruolo"
+                  value={filters.role}
+                  open={openMenu === 'role'}
+                  onToggle={() => toggleMenu('role')}
+                  options={[
+                    { value: null, label: 'Tutti i ruoli' },
+                    ...roles.map((r) => ({ value: r, label: r })),
+                  ]}
+                  onSelect={(v) => {
+                    updateFilter('role', v)
+                    setOpenMenu(null)
+                  }}
+                />
+                <div className="filter-row-spacer" />
+                <FilterDropdown
+                  label="Ordina"
+                  value={SORT_OPTIONS.find((s) => s.key === filters.sort)?.label ?? null}
+                  open={openMenu === 'sort'}
+                  onToggle={() => toggleMenu('sort')}
+                  options={SORT_OPTIONS.map((s) => ({ value: s.key, label: s.label }))}
+                  onSelect={(v) => {
+                    if (v) updateFilter('sort', v as SortKey)
+                    setOpenMenu(null)
+                  }}
+                  alignRight
+                  hideClear
+                />
+              </div>
+
+              {hasActiveFilters && (
+                <div className="active-filters">
+                  {filters.search.trim() && (
+                    <ActiveChip label={`Ricerca: "${filters.search.trim()}"`} onRemove={() => updateFilter('search', '')} />
                   )}
-                </AnimatePresence>
-              </div>
+                  {filters.year !== null && (
+                    <ActiveChip label={`Anno: ${filters.year}`} onRemove={() => updateFilter('year', null)} />
+                  )}
+                  {filters.type && (
+                    <ActiveChip label={`Tipologia: ${filters.type}`} onRemove={() => updateFilter('type', null)} />
+                  )}
+                  {filters.country && (
+                    <ActiveChip label={`Paese: ${filters.country}`} onRemove={() => updateFilter('country', null)} />
+                  )}
+                  {filters.role && (
+                    <ActiveChip label={`Ruolo: ${filters.role}`} onRemove={() => updateFilter('role', null)} />
+                  )}
+                  <button className="reset-btn" onClick={resetFilters}>
+                    <X size={13} /> Reset filtri
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="results-meta reveal">
-              <span>{filtered.length} {filtered.length === 1 ? 'evento' : 'eventi'}</span>
-              {activeType !== 'Tutti' && <span className="results-sep">·</span>}
-              {activeType !== 'Tutti' && <span className="results-tag">{activeType}</span>}
+              <span>
+                {filtered.length} {filtered.length === 1 ? 'evento trovato' : 'eventi trovati'}
+              </span>
+              {filtered.length !== EVENTS.length && (
+                <>
+                  <span className="results-sep">·</span>
+                  <span className="results-tag">su {EVENTS.length} totali</span>
+                </>
+              )}
             </div>
 
             <motion.div className="events-grid" layout>
@@ -233,7 +359,10 @@ export function Eventi() {
 
             {filtered.length === 0 && (
               <div className="empty-state">
-                <p>Nessun evento per questa tipologia.</p>
+                <p>Nessun evento corrisponde ai criteri selezionati.</p>
+                <button className="reset-btn reset-btn-large" onClick={resetFilters}>
+                  <X size={14} /> Reimposta filtri
+                </button>
               </div>
             )}
           </div>
@@ -307,26 +436,48 @@ export function Eventi() {
         .text-center { text-align: center; }
 
         /* FILTER BAR */
-        .filter-bar { display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.07); }
-        .filter-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-        .filter-chip { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: var(--text-secondary); padding: 0.55rem 1.1rem; border-radius: 999px; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.5px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.55rem; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); }
-        .filter-chip:hover { border-color: rgba(35,172,181,0.45); color: var(--white); transform: translateY(-1px); }
-        .filter-chip.active { background: var(--accent-teal); border-color: var(--accent-teal); color: var(--bg-primary); }
-        .filter-chip.active .chip-count { background: rgba(10,10,10,0.18); color: var(--bg-primary); }
-        .chip-count { background: rgba(255,255,255,0.06); border-radius: 999px; padding: 1px 8px; font-size: 0.7rem; font-weight: 600; color: var(--text-secondary); min-width: 22px; text-align: center; }
+        .filter-bar { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.07); position: relative; z-index: 50; }
 
-        /* SORT */
-        .sort-wrap { position: relative; }
-        .sort-trigger { background: transparent; border: 1px solid rgba(255,255,255,0.08); color: var(--text-primary); padding: 0.55rem 1rem; border-radius: 999px; font-size: 0.82rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.6rem; transition: border-color 0.3s; }
-        .sort-trigger:hover { border-color: rgba(35,172,181,0.45); }
-        .sort-label-prefix { color: var(--text-secondary); }
-        .sort-current { font-weight: 600; }
-        .sort-chevron { transition: transform 0.25s ease; }
-        .sort-chevron.open { transform: rotate(180deg); }
-        .sort-menu { position: absolute; right: 0; top: calc(100% + 8px); background: rgba(15,15,15,0.97); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 0.4rem; min-width: 200px; list-style: none; z-index: 50; box-shadow: 0 16px 40px rgba(0,0,0,0.5); }
-        .sort-option { width: 100%; text-align: left; background: transparent; border: none; color: var(--text-primary); padding: 0.65rem 0.9rem; border-radius: 8px; cursor: pointer; font-size: 0.85rem; transition: background 0.2s, color 0.2s; }
-        .sort-option:hover { background: rgba(35,172,181,0.08); color: var(--accent-teal); }
-        .sort-option.active { color: var(--accent-teal); }
+        .search-wrap { position: relative; width: 100%; }
+        .search-input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: var(--text-primary); padding: 0.95rem 2.6rem 0.95rem 2.8rem; border-radius: 12px; font-size: 0.95rem; font-family: var(--font-sans); outline: none; transition: border-color 0.3s, background 0.3s, box-shadow 0.3s; box-sizing: border-box; cursor: text; }
+        .search-input::placeholder { color: var(--text-secondary); opacity: 0.7; }
+        .search-input:focus { border-color: rgba(35,172,181,0.55); background: rgba(255,255,255,0.05); box-shadow: 0 0 0 4px rgba(35,172,181,0.08); }
+        .search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary); pointer-events: none; }
+        .search-clear { position: absolute; right: 0.7rem; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.06); border: none; color: var(--text-secondary); width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s, color 0.2s; }
+        .search-clear:hover { background: rgba(35,172,181,0.18); color: var(--accent-teal); }
+
+        .filter-row { display: flex; flex-wrap: wrap; gap: 0.7rem; align-items: center; }
+        .filter-row-spacer { flex: 1; min-width: 0; }
+
+        .filter-dd { position: relative; }
+        .filter-dd-trigger { display: inline-flex; align-items: center; gap: 0.6rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: var(--text-primary); padding: 0.6rem 0.95rem; border-radius: 10px; font-size: 0.85rem; cursor: pointer; transition: border-color 0.25s, background 0.25s; font-family: var(--font-sans); min-width: 175px; justify-content: space-between; }
+        .filter-dd-trigger:hover { border-color: rgba(35,172,181,0.45); }
+        .filter-dd-trigger.active { border-color: var(--accent-teal); background: rgba(35,172,181,0.08); }
+        .filter-dd-trigger-text { display: flex; flex-direction: column; align-items: flex-start; gap: 0.1rem; line-height: 1.1; text-align: left; }
+        .filter-dd-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-secondary); font-weight: 600; }
+        .filter-dd-value { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .filter-dd-value.placeholder { color: var(--text-secondary); font-weight: 400; }
+        .filter-dd-icons { display: inline-flex; align-items: center; gap: 0.35rem; flex-shrink: 0; }
+        .filter-dd-clear { background: rgba(35,172,181,0.15); border: none; color: var(--accent-teal); width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; }
+        .filter-dd-clear:hover { background: rgba(35,172,181,0.3); }
+        .filter-dd-chevron { transition: transform 0.25s ease; color: var(--text-secondary); }
+        .filter-dd-chevron.open { transform: rotate(180deg); }
+
+        .filter-dd-menu { position: absolute; left: 0; top: calc(100% + 8px); background: rgba(15,15,15,0.97); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 0.4rem; min-width: 220px; max-height: 320px; overflow-y: auto; list-style: none; z-index: 60; box-shadow: 0 16px 40px rgba(0,0,0,0.5); margin: 0; }
+        .filter-dd-menu.align-right { left: auto; right: 0; }
+        .filter-dd-menu::-webkit-scrollbar { width: 6px; }
+        .filter-dd-menu::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        .filter-dd-option { width: 100%; text-align: left; background: transparent; border: none; color: var(--text-primary); padding: 0.65rem 0.9rem; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-family: var(--font-sans); transition: background 0.18s, color 0.18s; display: block; }
+        .filter-dd-option:hover { background: rgba(35,172,181,0.08); color: var(--accent-teal); }
+        .filter-dd-option.active { color: var(--accent-teal); background: rgba(35,172,181,0.12); font-weight: 600; }
+
+        .active-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+        .active-chip { display: inline-flex; align-items: center; gap: 0.45rem; background: rgba(35,172,181,0.12); border: 1px solid rgba(35,172,181,0.32); color: var(--accent-teal); padding: 0.35rem 0.7rem 0.35rem 0.85rem; border-radius: 999px; font-size: 0.78rem; font-weight: 500; }
+        .active-chip-remove { background: transparent; border: none; color: var(--accent-teal); cursor: pointer; padding: 0; display: inline-flex; align-items: center; justify-content: center; opacity: 0.7; transition: opacity 0.2s; }
+        .active-chip-remove:hover { opacity: 1; }
+        .reset-btn { display: inline-flex; align-items: center; gap: 0.35rem; background: transparent; border: 1px dashed rgba(255,255,255,0.18); color: var(--text-secondary); padding: 0.35rem 0.8rem; border-radius: 999px; font-size: 0.78rem; cursor: pointer; transition: border-color 0.2s, color 0.2s; font-family: var(--font-sans); }
+        .reset-btn:hover { border-color: var(--accent-teal); color: var(--accent-teal); }
+        .reset-btn-large { margin-top: 1.5rem; padding: 0.6rem 1.4rem; font-size: 0.85rem; }
 
         .results-meta { display: flex; align-items: center; gap: 0.55rem; color: var(--text-secondary); font-size: 0.85rem; letter-spacing: 0.5px; margin-bottom: 2.5rem; }
         .results-sep { opacity: 0.4; }
@@ -368,15 +519,103 @@ export function Eventi() {
 
         @media (max-width: 1100px) {
           .events-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+          .filter-dd-trigger { min-width: 150px; }
         }
-        @media (max-width: 700px) {
+        @media (max-width: 760px) {
           .events-grid, .grid-footer { grid-template-columns: 1fr; gap: 2rem; }
-          .filter-bar { flex-direction: column; align-items: flex-start; }
-          .sort-wrap { width: 100%; }
-          .sort-trigger { width: 100%; justify-content: space-between; }
-          .sort-menu { left: 0; right: 0; }
+          .filter-row { gap: 0.5rem; }
+          .filter-row-spacer { display: none; }
+          .filter-dd { flex: 1 1 calc(50% - 0.25rem); min-width: 0; }
+          .filter-dd-trigger { width: 100%; min-width: 0; }
+          .filter-dd-menu { left: 0; right: 0; min-width: 0; }
+          .filter-dd-value { max-width: 100%; }
         }
       `}</style>
     </div>
+  )
+}
+
+/* ─────────── Sub-components ─────────── */
+
+type FilterDropdownProps = {
+  label: string
+  value: string | null
+  open: boolean
+  onToggle: () => void
+  options: { value: string | null; label: string }[]
+  onSelect: (v: string | null) => void
+  alignRight?: boolean
+  hideClear?: boolean
+}
+
+function FilterDropdown({ label, value, open, onToggle, options, onSelect, alignRight, hideClear }: FilterDropdownProps) {
+  const isActive = value !== null && !hideClear
+  return (
+    <div className="filter-dd">
+      <button
+        className={`filter-dd-trigger ${isActive ? 'active' : ''}`}
+        onClick={onToggle}
+        aria-expanded={open}
+      >
+        <span className="filter-dd-trigger-text">
+          <span className="filter-dd-label">{label}</span>
+          <span className={`filter-dd-value ${value ? '' : 'placeholder'}`}>
+            {value ?? 'Tutti'}
+          </span>
+        </span>
+        <span className="filter-dd-icons">
+          {isActive && (
+            <span
+              className="filter-dd-clear"
+              onClick={(e) => {
+                e.stopPropagation()
+                onSelect(null)
+              }}
+              role="button"
+              aria-label={`Rimuovi filtro ${label}`}
+            >
+              <X size={11} />
+            </span>
+          )}
+          <ArrowDown size={14} className={`filter-dd-chevron ${open ? 'open' : ''}`} />
+        </span>
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.ul
+            className={`filter-dd-menu ${alignRight ? 'align-right' : ''}`}
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.16, ease: 'easeOut' }}
+          >
+            {options.map((opt) => {
+              const selected = opt.value === value || (opt.value === null && value === null)
+              return (
+                <li key={opt.value ?? '__all'}>
+                  <button
+                    className={`filter-dd-option ${selected ? 'active' : ''}`}
+                    onClick={() => onSelect(opt.value)}
+                  >
+                    {opt.label}
+                  </button>
+                </li>
+              )
+            })}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+function ActiveChip({ label, onRemove }: { label: string; onRemove: () => void }) {
+  return (
+    <span className="active-chip">
+      {label}
+      <button className="active-chip-remove" onClick={onRemove} aria-label={`Rimuovi ${label}`}>
+        <X size={12} />
+      </button>
+    </span>
   )
 }

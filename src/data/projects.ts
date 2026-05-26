@@ -1,7 +1,18 @@
 export type ProjectCategory =
   | 'Ingegneria Strutturale'
   | 'Ingegneria Infrastrutturale'
+  | 'Ingegneria Forense'
   | 'Ingegneria Geotecnica'
+
+export type ProjectTypology =
+  | 'Ponte'
+  | 'Viadotto'
+  | 'Galleria'
+  | 'Edificio monumentale'
+  | 'Impianto sportivo'
+  | 'Fondazioni speciali'
+  | 'Opere di sostegno'
+  | 'Diga'
 
 export type ArticleBlock =
   | { type: 'paragraph'; text: string }
@@ -14,6 +25,7 @@ export type Project = {
   title: string
   description: string
   category: ProjectCategory
+  typology: ProjectTypology
   year: number
   location: string
   cover: string
@@ -32,6 +44,7 @@ export const PROJECTS: Project[] = [
     description:
       'Adeguamento sismico e retrofit strutturale di un viadotto autostradale di 1.2 km in zona ad alto rischio sismico.',
     category: 'Ingegneria Infrastrutturale',
+    typology: 'Viadotto',
     year: 2022,
     location: 'Calabria',
     client: 'ANAS S.p.A.',
@@ -117,6 +130,7 @@ export const PROJECTS: Project[] = [
     description:
       'Analisi sismica non-lineare e certificazione strutturale di un impianto sportivo di rilievo nazionale.',
     category: 'Ingegneria Strutturale',
+    typology: 'Impianto sportivo',
     year: 2023,
     location: 'Roma',
     client: 'Sport e Salute S.p.A.',
@@ -188,6 +202,7 @@ export const PROJECTS: Project[] = [
     description:
       'Progettazione esecutiva e direzione lavori di un ponte ad arco da 280 m di luce libera.',
     category: 'Ingegneria Infrastrutturale',
+    typology: 'Ponte',
     year: 2020,
     location: 'Salerno',
     client: 'Provincia di Salerno',
@@ -253,6 +268,7 @@ export const PROJECTS: Project[] = [
     description:
       'Analisi geotecnica e progettazione strutturale di una galleria ferroviaria con metodo NATM.',
     category: 'Ingegneria Infrastrutturale',
+    typology: 'Galleria',
     year: 2024,
     location: 'Genova',
     client: 'RFI - Rete Ferroviaria Italiana',
@@ -318,6 +334,7 @@ export const PROJECTS: Project[] = [
     description:
       'Consolidamento strutturale e adeguamento sismico di un edificio monumentale del XV secolo.',
     category: 'Ingegneria Strutturale',
+    typology: 'Edificio monumentale',
     year: 2021,
     location: 'Firenze',
     client: 'Soprintendenza per il Patrimonio Storico-Artistico',
@@ -383,6 +400,7 @@ export const PROJECTS: Project[] = [
     description:
       'Stabilizzazione geotecnica con micropali e tiranti per la protezione di un borgo costiero patrimonio UNESCO.',
     category: 'Ingegneria Geotecnica',
+    typology: 'Opere di sostegno',
     year: 2023,
     location: 'Cinque Terre',
     client: 'Parco Nazionale delle Cinque Terre',
@@ -448,6 +466,7 @@ export const PROJECTS: Project[] = [
     description:
       'Progettazione di fondazioni profonde su pali trivellati in argille consolidate per torre di 180 m.',
     category: 'Ingegneria Geotecnica',
+    typology: 'Fondazioni speciali',
     year: 2022,
     location: 'Milano',
     client: 'Developer privato',
@@ -513,6 +532,7 @@ export const PROJECTS: Project[] = [
     description:
       'Sistema di monitoraggio IoT con fibre ottiche e sensori MEMS per opera strategica di sbarramento.',
     category: 'Ingegneria Strutturale',
+    typology: 'Diga',
     year: 2021,
     location: 'Trentino',
     client: 'Concessionario idroelettrico',
@@ -569,6 +589,7 @@ export const PROJECTS: Project[] = [
     description:
       'Diagnostica strutturale e intervento di miglioramento sismico con materiali compositi CFRP.',
     category: 'Ingegneria Strutturale',
+    typology: 'Edificio monumentale',
     year: 2019,
     location: 'Umbria',
     client: 'Diocesi locale - Soprintendenza',

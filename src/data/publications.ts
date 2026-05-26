@@ -8,6 +8,7 @@ export type Publication = {
   tags: string[]
   pdfUrl: string
   doi?: string
+  link?: string
 }
 
 export const PUBLICATIONS: Publication[] = [
@@ -36,6 +37,7 @@ export const PUBLICATIONS: Publication[] = [
     tags: ['Monitoraggio', 'Ingegneria Strutturale', 'IoT'],
     pdfUrl: '/publications/monitoraggio-fibre-ottiche-2024.pdf',
     doi: '10.1016/j.engstruct.2024.117284',
+    link: 'https://doi.org/10.1016/j.engstruct.2024.117284',
   },
   {
     id: 'galleria-natm-evolutivo-2023',
@@ -62,6 +64,7 @@ export const PUBLICATIONS: Publication[] = [
     tags: ['Ingegneria Strutturale', 'Restauro', 'Materiali'],
     pdfUrl: '/publications/cfrp-restauro-strutturale-2023.pdf',
     doi: '10.1016/j.conbuildmat.2023.131854',
+    link: 'https://doi.org/10.1016/j.conbuildmat.2023.131854',
   },
   {
     id: 'consolidamento-versanti-2022',
@@ -88,6 +91,7 @@ export const PUBLICATIONS: Publication[] = [
     tags: ['Ingegneria Geotecnica', 'Fondazioni', 'Monitoraggio'],
     pdfUrl: '/publications/fondazioni-profonde-milano-2022.pdf',
     doi: '10.1680/jgeot.21.00318',
+    link: 'https://doi.org/10.1680/jgeot.21.00318',
   },
   {
     id: 'isolatori-sismici-retrofit-2021',
@@ -114,6 +118,7 @@ export const PUBLICATIONS: Publication[] = [
     tags: ['Ingegneria Infrastrutturale', 'Ponti', 'Aerodinamica'],
     pdfUrl: '/publications/aerodinamica-ponti-2021.pdf',
     doi: '10.1016/j.jweia.2021.104612',
+    link: 'https://doi.org/10.1016/j.jweia.2021.104612',
   },
   {
     id: 'diagnostica-murature-storiche-2020',
