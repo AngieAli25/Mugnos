@@ -6,7 +6,6 @@ import { Button } from '../components/Button'
 import {
   ArrowRight,
   Phone,
-  Mail,
   MapPin,
   ExternalLink,
   Building2,

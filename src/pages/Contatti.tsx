@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Button } from '../components/Button'
-import { Phone, Mail, MapPin, Send, Clock, ChevronDown } from 'lucide-react'
+import { Phone, MapPin, Send, Clock, ChevronDown } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 gsap.registerPlugin(ScrollTrigger)

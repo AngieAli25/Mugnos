@@ -2,7 +2,7 @@ import { useEffect, useRef, useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Phone, Mail, MapPin, Download, ArrowDown, Search, X, ExternalLink } from 'lucide-react'
+import { Phone, MapPin, Download, ArrowDown, Search, X, ExternalLink } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { PUBLICATIONS } from '../data/publications'
 

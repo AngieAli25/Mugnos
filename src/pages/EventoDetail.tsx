@@ -6,7 +6,6 @@ import { useParams, Link, Navigate } from 'react-router-dom'
 import {
   ArrowLeft,
   Phone,
-  Mail,
   MapPin,
   Calendar,
   Award,
