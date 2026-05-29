@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Button } from '../components/Button'
-import { ArrowRight, ChevronRight, Phone, Mail, MapPin, Building2, Construction, ScanSearch, Mountain } from 'lucide-react'
+import { ArrowRight, ChevronRight, Phone, Mail, MapPin, Building2, Construction, ScanSearch, Mountain, Activity } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -14,13 +14,13 @@ const SECTORS = [
     label: 'Ingegneria Strutturale',
     short: 'Strutturale',
     subtitle: 'Calcolo & Verifica',
-    description: `Progettazione strutturale di edifici, opere d'arte e infrastrutture speciali. Analisi sismica non lineare, modellazione FEM 3D e adeguamento delle strutture esistenti agli Eurocodici, con focus su durabilità e sicurezza.`,
+    description: `Progettazione, verifica, diagnosi e consolidamento di strutture civili e industriali, con attenzione a sicurezza, durabilità e prestazioni sismiche.`,
     features: [
-      'Analisi statica e dinamica non-lineare',
+      'Progettazione di strutture civili e industriali',
+      'Verifica di sicurezza e diagnosi strutturale',
+      'Consolidamento e rinforzo di opere esistenti',
+      'Analisi sismica secondo Eurocodici',
       'Modellazione FEM 3D ad alta densità',
-      'Verifiche sismiche secondo Eurocodici',
-      'Progettazione edifici, ponti e coperture',
-      'Adeguamento sismico di strutture esistenti',
     ],
     kpi: [
       { value: '250+', label: 'Progetti strutturali' },
@@ -35,13 +35,13 @@ const SECTORS = [
     label: 'Ingegneria Infrastrutturale',
     short: 'Infrastrutturale',
     subtitle: 'Reti & Mobilità',
-    description: `Progettazione di ponti, viadotti, gallerie e opere d'arte stradali e ferroviarie. Studi di traffico, verifiche di durabilità e direzione lavori per infrastrutture strategiche di rilievo nazionale ed europeo.`,
+    description: `Progettazione di nuove infrastrutture e consulenza e supporto tecnico diagnostico per interventi su opere esistenti, orientati a funzionalità, sicurezza e sostenibilità.`,
     features: [
-      'Progettazione di ponti, viadotti e gallerie',
-      'Studi di traffico e analisi funzionale',
-      'Verifiche di durabilità e fatica',
-      'Direzione lavori e alta sorveglianza',
-      'Collaudi statici e dinamici in situ',
+      'Progettazione di nuove infrastrutture',
+      'Consulenza tecnica e diagnostica',
+      'Interventi su opere esistenti',
+      'Verifiche di funzionalità e sicurezza',
+      'Approccio orientato alla sostenibilità',
     ],
     kpi: [
       { value: '4.540', label: 'km di tracciato' },
@@ -52,17 +52,38 @@ const SECTORS = [
     icon: <Construction size={36} strokeWidth={1.5} />,
   },
   {
+    id: 'geotecnica',
+    label: 'Ingegneria Geotecnica',
+    short: 'Geotecnica',
+    subtitle: 'Suolo & Fondazioni',
+    description: `Analisi del complesso geotecnico e dei cedimenti fondazionali e progettazione di fondazioni, fronti di scavo, opere di sostegno e interventi per la stabilità dei versanti.`,
+    features: [
+      'Analisi del complesso geotecnico',
+      'Diagnosi dei cedimenti fondazionali',
+      'Progettazione di fondazioni profonde',
+      'Fronti di scavo e opere di sostegno',
+      'Stabilizzazione dei versanti',
+    ],
+    kpi: [
+      { value: '180+', label: 'Fondazioni progettate' },
+      { value: '95+', label: 'Versanti stabilizzati' },
+      { value: '24', label: 'anni di geotecnica' },
+    ],
+    image: 'https://loremflickr.com/1600/1000/excavation,foundation?lock=1007',
+    icon: <Mountain size={36} strokeWidth={1.5} />,
+  },
+  {
     id: 'forense',
     label: 'Ingegneria Forense',
     short: 'Forense',
     subtitle: 'Diagnosi & Perizia',
-    description: `Perizie tecniche, indagini su cedimenti e crolli, consulenza per contenziosi civili e penali. Ricostruzione di cinematismi di collasso supportata da diagnostica strutturale avanzata e modellazione numerica.`,
+    description: `Consulenze tecniche e accertamenti su danni, dissesti e contenziosi, con valutazioni documentate e indipendenti.`,
     features: [
-      "Perizie tecniche di parte e d'ufficio",
-      'Indagini su cedimenti, crolli e dissesti',
+      "Consulenze tecniche di parte e d'ufficio",
+      'Accertamenti su danni e dissesti',
+      'Analisi forense per contenziosi',
+      'Valutazioni documentate e indipendenti',
       'Ricostruzione di cinematismi di collasso',
-      'Consulenza tecnica per contenziosi',
-      'Diagnostica strutturale non-invasiva',
     ],
     kpi: [
       { value: '120+', label: 'Perizie tecniche' },
@@ -73,25 +94,25 @@ const SECTORS = [
     icon: <ScanSearch size={36} strokeWidth={1.5} />,
   },
   {
-    id: 'geotecnica',
-    label: 'Ingegneria Geotecnica',
-    short: 'Geotecnica',
-    subtitle: 'Suolo & Fondazioni',
-    description: `Caratterizzazione del sottosuolo, progettazione di fondazioni profonde, analisi di stabilità di pendii e versanti, opere di sostegno e scavi. Approccio integrato tra indagini, modellazione numerica e monitoraggio in continuo.`,
+    id: 'monitoraggio',
+    label: 'Monitoraggio Strutturale',
+    short: 'Monitoraggio',
+    subtitle: 'Sensori & Prevenzione',
+    description: `Progettiamo sistemi di monitoraggio statico e dinamico per edifici e infrastrutture, finalizzati al controllo nel tempo del comportamento strutturale, alla valutazione delle condizioni di sicurezza e al supporto delle attività di manutenzione, gestione e prevenzione.`,
     features: [
-      'Caratterizzazione geotecnica del sottosuolo',
-      'Progettazione di fondazioni profonde',
-      'Analisi di stabilità di pendii e versanti',
-      'Opere di sostegno e scavi profondi',
-      'Monitoraggio geotecnico in continuo',
+      'Monitoraggio statico e dinamico in continuo',
+      'Sistemi IoT e fibre ottiche distribuite',
+      'Algoritmi di anomaly detection con AI',
+      'Manutenzione predittiva',
+      'Supporto a gestione e prevenzione',
     ],
     kpi: [
-      { value: '180+', label: 'Fondazioni progettate' },
-      { value: '95+', label: 'Versanti stabilizzati' },
-      { value: '24', label: 'anni di geotecnica' },
+      { value: '60+', label: 'Sistemi installati' },
+      { value: '4.800', label: 'Sensori operativi' },
+      { value: '12', label: 'Opere strategiche' },
     ],
-    image: 'https://loremflickr.com/1600/1000/excavation,foundation?lock=1007',
-    icon: <Mountain size={36} strokeWidth={1.5} />,
+    image: 'https://loremflickr.com/1600/1000/iot?lock=1009',
+    icon: <Activity size={36} strokeWidth={1.5} />,
   },
 ]
 
@@ -406,18 +427,17 @@ export function Settori() {
         <footer id="contatti" className="footer section-padding">
           <div className="container grid-footer">
             <div className="reveal">
-              <h1 className="footer-logo">L&M INGEGNERIA</h1>
+              <img src="/loghi/1%20995.png" alt="L&M Ingegneria" className="footer-logo" />
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '300px' }}>
-                Eccellenza nella progettazione infrastrutturale.<br />
-                Dall'analisi accademica alla realizzazione.
+                Un ponte tra esperienza e innovazione.
               </p>
             </div>
             <div className="reveal">
               <h4 className="footer-title">Contatti</h4>
               <ul className="footer-contact-list">
                 <li><MapPin size={18} /> Contrada Andolina, Canicattì (AG)</li>
-                <li><Phone size={18} /> +39 06 1234567</li>
-                <li><Mail size={18} /> info@lmingegneria.it</li>
+                <li><Phone size={18} /> Elio Lo Giudice — +39 334 176 5539</li>
+                <li><Phone size={18} /> Giuseppe Mugnos — +39 328 162 3648</li>
               </ul>
             </div>
             <div className="reveal">

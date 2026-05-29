@@ -21,58 +21,58 @@ import { Link } from 'react-router-dom'
 gsap.registerPlugin(ScrollTrigger)
 
 const TIMELINE = [
-  { year: '1999', title: 'Fondazione', desc: 'Lo studio nasce come spin-off dell\'attività accademica di Lo Giudice e Mugnos, con sede a Roma.' },
-  { year: '2003', title: 'Prima grande opera', desc: 'Progettazione e direzione lavori del viadotto sull\'A3 Napoli-Salerno, primo incarico istituzionale.' },
-  { year: '2008', title: 'Partnership internazionale', desc: 'Accordo di ricerca con l\'ETH di Zurigo per lo sviluppo di metodologie sismiche non lineari.' },
-  { year: '2013', title: 'Premio Ingegneria Italiana', desc: 'Riconoscimento da parte del CNI per l\'eccellenza nella progettazione di infrastrutture complesse.' },
-  { year: '2019', title: 'Espansione in Europa', desc: 'Apertura di collaborazioni con stazioni appaltanti in Francia, Spagna e Germania.' },
-  { year: '2024', title: '25 anni di attività', desc: 'Venticinque anni di ricerca applicata, 450+ progetti completati, 4.540 km di infrastrutture realizzate.' },
+  { year: '2015', title: 'Incontro a Licata', desc: 'Nell\'estate del 2015, durante le verifiche del ponte stradale "Federico II di Svevia" di Morandi, Elio Lo Giudice incontra il giovane ingegnere Giuseppe Mugnos, in tirocinio presso gli uffici tecnici comunali.' },
+  { year: '2017', title: 'Una sintonia che cresce', desc: 'Negli anni successivi la collaborazione professionale si consolida, unendo l\'esperienza maturata sul campo alla spinta dell\'innovazione e della ricerca scientifica.' },
+  { year: '2019', title: 'Lo Studio Associato', desc: 'Nasce ufficialmente lo Studio Associato di Ingegneria Strutturale "Lo Giudice & Mugnos": un nome che unisce due storie, ma una sola identità.' },
+  { year: '2021', title: 'Specializzazione e crescita', desc: 'Lo studio amplia il proprio raggio d\'azione, diventando un riferimento per la progettazione strutturale e infrastrutturale e per il recupero del patrimonio esistente.' },
+  { year: '2024', title: 'Quattro macro-settori', desc: 'L\'attività si articola ufficialmente nei quattro settori: Strutturale, Infrastrutturale, Geotecnica e Forense, con il monitoraggio strutturale come ambito trasversale.' },
+  { year: '2026', title: 'Un ponte tra esperienza e innovazione', desc: 'Una nuova identità di marca racconta il senso del nostro percorso: integrare ricerca, metodo e costruzione per opere che durino nel tempo.' },
 ]
 
 const VALUES = [
-  { title: 'Integrità', desc: 'Ogni analisi riflette la realtà dei dati, senza semplificazioni che compromettano la sicurezza.', Icon: Target },
-  { title: 'Metodo', desc: 'Approccio scientifico rigoroso in ogni fase: dall\'acquisizione dati alla certificazione finale.', Icon: BookOpen },
-  { title: 'Innovazione', desc: 'Adottiamo le metodologie più avanzate, sviluppate in collaborazione con i principali atenei europei.', Icon: Microscope },
-  { title: 'Collaborazione', desc: 'Lavoriamo con un network di eccellenze accademiche e professionali per garantire la massima qualità.', Icon: Users },
-  { title: 'Eccellenza', desc: 'Il nostro standard non è la conformità normativa: è il margine di sicurezza che va oltre il minimo.', Icon: Award },
-  { title: 'Visione globale', desc: 'Competenze che si misurano con le sfide ingegneristiche più complesse a livello internazionale.', Icon: Globe },
+  { title: 'Integrità', desc: 'Agiamo con responsabilità, trasparenza e rispetto verso il territorio, le persone e le opere che realizziamo.', Icon: Target },
+  { title: 'Metodo', desc: 'Ogni progetto nasce da un processo rigoroso, strutturato e verificato, fondato su precisione, disciplina tecnica e sperimentazione.', Icon: BookOpen },
+  { title: 'Innovazione', desc: 'Ricerca scientifica, modellazione avanzata e uso di sistemi intelligenti guidano il nostro approccio progettuale.', Icon: Microscope },
+  { title: 'Esperienza', desc: 'Un patrimonio di oltre trent\'anni di attività professionale si unisce alla visione contemporanea della nuova generazione.', Icon: Award },
+  { title: 'Collaborazione', desc: 'Crediamo nel dialogo continuo con clienti, enti e professionisti: le migliori soluzioni nascono sempre dal confronto.', Icon: Users },
+  { title: 'Visione globale', desc: 'Ogni opera è parte di un sistema più ampio: territorio, mobilità, sicurezza, sostenibilità. Progettiamo pensando al lungo periodo.', Icon: Globe },
 ]
 
 const ACCORDION_ELIO = [
   {
-    title: 'Formazione e carriera accademica',
-    body: 'Laureato con lode in Ingegneria Civile presso La Sapienza di Roma, ha conseguito il dottorato all\'ETH di Zurigo con una tesi sulla resilienza sismica delle strutture in calcestruzzo precompresso. Ordinario dal 2001, ha ricoperto ruoli di visiting professor presso MIT e TU Delft.',
+    title: 'Esperienza e percorso professionale',
+    body: 'Oltre trent\'anni di attività nella progettazione strutturale e infrastrutturale. Ha contribuito a opere di rilievo nazionale, dai ponti autostradali agli interventi su strutture esistenti, con particolare attenzione alle verifiche sismiche e al recupero del patrimonio strutturale.',
   },
   {
-    title: 'Aree di ricerca',
-    body: 'Analisi non lineare sotto azioni sismiche, modellazione del comportamento viscoso del calcestruzzo nel lungo periodo e metodologie di collaudo dinamico per ponti e viadotti. Ha coordinato 6 progetti PRIN e 2 progetti europei Horizon 2020.',
+    title: 'Competenze chiave',
+    body: 'Progettazione strutturale e infrastrutturale, verifiche sismiche e diagnostica avanzata, sperimentazione su strutture e infrastrutture, direzione lavori e collaudi statici e dinamici.',
   },
   {
-    title: 'Principali opere realizzate',
-    body: 'Progettazione e collaudo di oltre 80 strutture di grande luce: viadotti A3 Napoli-Salerno, ponte sul Fiume Sele, viadotto Cannavino SS280 Calabria. Ha diretto la verifica sismica di 40+ ponti strategici per il Ministero delle Infrastrutture.',
+    title: 'Ruolo nel Laboratorio DISMAT',
+    body: 'Direttore del Laboratorio DISMAT. La sua attività di laboratorio si integra costantemente con quella progettuale dello studio, garantendo dati oggettivi e un controllo diretto sulle prove a supporto delle scelte progettuali.',
   },
   {
-    title: 'Pubblicazioni e riconoscimenti',
-    body: 'Autore di oltre 80 pubblicazioni ISI (H-index 22). Premio Ingegneria Strutturale ANIDIS 2011, Premio Internazionale "Bridge & Structural Engineering" Vienna 2017.',
+    title: 'Opere e collaborazioni significative',
+    body: 'Attività di sperimentazione e verifica del ponte stradale "Federico II di Svevia" a Licata. Collaborazioni con enti istituzionali, atenei e committenti pubblici e privati su tutto il territorio nazionale.',
   },
 ]
 
 const ACCORDION_GIUSEPPE = [
   {
-    title: 'Formazione e carriera accademica',
-    body: 'Laureato in Ingegneria Civile a Palermo, ha completato la formazione con un master in Structural Health Monitoring alla Columbia University di New York. Ordinario di Scienza delle Costruzioni presso UniPA dal 2001 e membro del Consiglio Scientifico AICAP.',
+    title: 'Formazione e percorso',
+    body: 'Ingegnere civile, ha iniziato il proprio percorso professionale nel 2015 con un tirocinio presso gli uffici tecnici comunali di Licata, durante il quale ha incontrato Elio Lo Giudice. Da allora il rapporto professionale si è consolidato fino alla fondazione dello Studio Associato nel 2019.',
   },
   {
-    title: 'Specializzazioni tecniche',
-    body: 'Diagnostica materica avanzata, monitoraggio strutturale con fibre ottiche e sensori IoT, manutenzione predittiva basata su intelligenza artificiale. Tra i primi in Italia a sviluppare protocolli di ispezione continua per gallerie ferroviarie ad alta velocità.',
+    title: 'Aree di specializzazione',
+    body: 'Dinamica strutturale, monitoraggio statico e dinamico, prove speciali su strutture e infrastrutture, modellazione numerica avanzata e integrazione tra ricerca scientifica e attività progettuale.',
   },
   {
-    title: 'Principali opere realizzate',
-    body: 'Monitoraggio strutturale di oltre 60 gallerie e tunnel: galleria Santomarco A3, traforo del Frejus (tratto italiano), numerosi tunnel TAV. Ha progettato il sistema di monitoraggio della Galleria di Base del Brennero per la quota italiana.',
+    title: 'Ruolo nel Laboratorio DISMAT',
+    body: 'Sperimentatore e Responsabile del settore di dinamica strutturale e prove speciali del Laboratorio DISMAT. Coordina campagne sperimentali su edifici, ponti, viadotti e infrastrutture complesse.',
   },
   {
-    title: 'Attività didattica e divulgativa',
-    body: 'Titolare del corso magistrale "Diagnostica e Monitoraggio delle Strutture" a Palermo. Oltre 30 conferenze internazionali e fondatore nel 2015 di LabDiSt (Laboratorio di Diagnostica Strutturale), unico nel suo genere nel Sud Italia.',
+    title: 'Visione e contributo allo studio',
+    body: 'Porta nello studio la spinta dell\'innovazione e della ricerca scientifica, integrando le metodologie più avanzate con la solidità dell\'esperienza maturata sul campo dal co-fondatore.',
   },
 ]
 
@@ -303,11 +303,11 @@ export function Studio() {
               transition={{ duration: 1 }}
               style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}
             >
-              <h3 className="section-tag">Oltre la Progettazione</h3>
-              <h1 className="hero-main-title">La Nostra <span className="text-gradient">Eredità</span></h1>
+              <h3 className="section-tag">La Nostra Storia</h3>
+              <h1 className="hero-main-title">Un Ponte tra <span className="text-gradient">Esperienza e Innovazione</span></h1>
               <p className="hero-subtitle">
-                Venticinque anni di ricerca scientifica applicata alle infrastrutture più complesse d'Europa.
-                Scopri la storia e la visione dei fondatori di L&M Ingegneria.
+                L&M Ingegneria nasce dall'incontro tra due generazioni e una stessa visione
+                dell'ingegneria: rigorosa, innovativa e profondamente responsabile.
               </p>
             </motion.div>
           </div>
@@ -318,28 +318,30 @@ export function Studio() {
           <div className="container">
             <div className="vision-grid">
               <div>
-                <span className="section-tag">La nostra filosofia</span>
+                <span className="section-tag">Filosofia</span>
                 <h2 className="section-title">
-                  <WordReveal text="Una Visione Senza Confini" />
+                  <WordReveal text="Rigore, Visione, Innovazione" />
                 </h2>
                 <div className="quote-card glass-card" style={{ marginTop: '2rem', padding: '2.5rem' }}>
                   <Quote size={36} style={{ color: 'var(--accent-teal)', opacity: 0.5, marginBottom: '1rem' }} />
                   <p className="quote-text">
-                    "L'ingegneria non è solo calcolo, è la capacità di prevedere il comportamento della materia
-                    attraverso il tempo. Il nostro obiettivo è costruire opere che non siano solo funzionali,
-                    ma sicure per le generazioni a venire."
+                    "Per noi progettare non significa solo calcolare. Significa interpretare, prevedere,
+                    inventare. Significa assumersi la responsabilità di opere che devono durare nel tempo,
+                    dialogare con il territorio e garantire sicurezza."
                   </p>
                 </div>
               </div>
               <div className="reveal">
                 <p className="lead-text">
-                  Fondata nel 1999, L&M Ingegneria nasce come spin-off dell'attività accademica dei suoi fondatori.
+                  Crediamo in un'ingegneria che unisce rigore scientifico, responsabilità e visione.
                 </p>
                 <p className="body-text">
-                  Inizialmente focalizzato sulla consulenza specialistica per il Ministero delle Infrastrutture,
-                  lo studio si è evoluto rapidamente diventando un punto di riferimento nazionale per la
-                  progettazione di ponti e gallerie. La nostra forza risiede nell'integrazione costante tra
-                  le più avanzate metodologie di calcolo numerico e una solida esperienza di cantiere.
+                  Ogni opera è un sistema complesso che richiede metodo, esperienza e capacità di
+                  interpretare il territorio. Per noi progettare significa trasformare la conoscenza in
+                  valore, la complessità in soluzioni sicure e durature, la ricerca in innovazione
+                  concreta. L&M Ingegneria nasce dall'incontro tra due generazioni e si fonda sull'idea
+                  che l'ingegneria non si limita a risolvere problemi: anticipa scenari, innova processi
+                  e genera valore per la collettività.
                 </p>
                 <div className="vision-values-row">
                   <div className="vision-badge" onMouseMove={handle3DMove} onMouseLeave={handle3DLeave}>
@@ -372,13 +374,19 @@ export function Studio() {
               <div className="founder-text">
                 <span className="section-tag">Co-Fondatore</span>
                 <h2 className="section-title">
-                  <WordReveal text="Prof. Elio Lo Giudice" />
+                  <WordReveal text="Ing. Elio Lo Giudice" />
                 </h2>
                 <p className="body-text" style={{ marginBottom: '1rem' }}>
-                  Professore ordinario presso La Sapienza di Roma, Elio Lo Giudice ha dedicato oltre trent'anni alla ricerca sui meccanismi di collasso delle grandi infrastrutture. Dopo il dottorato all'ETH di Zurigo, ha sviluppato metodologie originali per la verifica della resilienza sismica di ponti e viadotti, diventando consulente di riferimento per il Ministero delle Infrastrutture e dei Trasporti.
+                  Professionista con oltre trent'anni di esperienza nella progettazione strutturale e
+                  infrastrutturale, Elio Lo Giudice ha contribuito alla realizzazione e alla verifica di
+                  opere di rilievo nazionale, con particolare attenzione al recupero del patrimonio
+                  strutturale esistente sul piano diagnostico e progettuale.
                 </p>
                 <p className="body-text">
-                  Ha diretto i collaudi statici e dinamici di oltre ottanta strutture di grande luce, coordinando team multidisciplinari in condizioni operative complesse. La sua produzione scientifica — oltre ottanta pubblicazioni ISI con H-index 22 — è un riferimento internazionale nell'ingegneria strutturale avanzata.
+                  Nell'estate del 2015, durante le attività di sperimentazione e verifica del ponte
+                  stradale "Federico II di Svevia" a Licata — opera progettata da Morandi — incontra
+                  un giovane ingegnere civile, Giuseppe Mugnos. Un incontro casuale destinato a
+                  diventare il punto di svolta da cui, nel 2019, nascerà lo Studio Associato.
                 </p>
                 <Accordion items={ACCORDION_ELIO} />
               </div>
@@ -393,13 +401,19 @@ export function Studio() {
               <div className="founder-text">
                 <span className="section-tag">Co-Fondatore</span>
                 <h2 className="section-title">
-                  <WordReveal text="Prof. Giuseppe Mugnos" />
+                  <WordReveal text="Ing. Giuseppe Mugnos" />
                 </h2>
                 <p className="body-text" style={{ marginBottom: '1rem' }}>
-                  Professore ordinario di Scienza delle Costruzioni a Palermo dal 2001, Giuseppe Mugnos si è specializzato alla Columbia University in Structural Health Monitoring. È stato tra i primi in Italia a integrare sistemi IoT e fibre ottiche per il controllo in tempo reale di gallerie e tunnel ad alta velocità.
+                  Ingegnere civile, mosso fin dagli inizi da curiosità tecnica e ambizione progettuale.
+                  Nel 2015, da neolaureato, svolge il proprio tirocinio presso gli uffici tecnici comunali
+                  di Licata, dove incontra Elio Lo Giudice durante le verifiche sul ponte "Federico II
+                  di Svevia".
                 </p>
                 <p className="body-text">
-                  Fondatore di LabDiSt nel 2015 — unico laboratorio di diagnostica strutturale nel Sud Italia — ha sviluppato protocolli di ispezione oggi adottati da RFI e ANAS su tratte strategiche della rete nazionale.
+                  Da quell'incontro nasce una sintonia che cresce negli anni, fondendo la spinta
+                  dell'innovazione e della ricerca scientifica con l'esperienza maturata sul campo.
+                  Nel 2019 nasce ufficialmente lo Studio Associato "Lo Giudice & Mugnos": un nome che
+                  unisce due storie, ma una sola identità.
                 </p>
                 <Accordion items={ACCORDION_GIUSEPPE} />
               </div>
@@ -508,12 +522,12 @@ export function Studio() {
             </div>
             <div className="studio-stats-grid">
               {[
-                { value: '25', label: 'Anni di attività' },
-                { value: '450+', label: 'Progetti completati' },
-                { value: '80+', label: 'Pubblicazioni scientifiche' },
-                { value: '12', label: 'Partner accademici' },
-                { value: '15+', label: 'Premi e riconoscimenti' },
-                { value: '120+', label: 'Conferenze internazionali' },
+                { value: '30+', label: 'Anni di esperienza' },
+                { value: '200+', label: 'Progetti di rilievo' },
+                { value: '100+', label: 'Committenti di rilievo' },
+                { value: '4', label: 'Macro-settori' },
+                { value: '30+', label: 'Collaborazioni' },
+                { value: '2019', label: 'Anno di fondazione' },
               ].map((s, i) => (
                 <motion.div
                   key={i}
@@ -535,18 +549,17 @@ export function Studio() {
         <footer id="contatti" className="footer section-padding">
           <div className="container grid-footer">
             <div className="reveal">
-              <h1 className="footer-logo">L&M INGEGNERIA</h1>
+              <img src="/loghi/1%20995.png" alt="L&M Ingegneria" className="footer-logo" />
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '300px' }}>
-                Eccellenza nella progettazione infrastrutturale.<br />
-                Dall'analisi accademica alla realizzazione.
+                Un ponte tra esperienza e innovazione.
               </p>
             </div>
             <div className="reveal">
               <h4 className="footer-title">Contatti</h4>
               <ul className="footer-contact-list">
                 <li><MapPin size={18} /> Contrada Andolina, Canicattì (AG)</li>
-                <li><Phone size={18} /> +39 06 1234567</li>
-                <li><Mail size={18} /> info@lmingegneria.it</li>
+                <li><Phone size={18} /> Elio Lo Giudice — +39 334 176 5539</li>
+                <li><Phone size={18} /> Giuseppe Mugnos — +39 328 162 3648</li>
               </ul>
             </div>
             <div className="reveal">

@@ -1,8 +1,9 @@
 export type ProjectCategory =
   | 'Ingegneria Strutturale'
   | 'Ingegneria Infrastrutturale'
-  | 'Ingegneria Forense'
   | 'Ingegneria Geotecnica'
+  | 'Ingegneria Forense'
+  | 'Monitoraggio Strutturale'
 
 export type ProjectTypology =
   | 'Ponte'

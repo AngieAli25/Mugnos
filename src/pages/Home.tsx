@@ -9,11 +9,13 @@ import {
   Mail,
   MapPin,
   ExternalLink,
-  BadgeCheck,
   Building2,
   Construction,
   ScanSearch,
   Mountain,
+  Activity,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { PROJECTS } from '../data/projects'
@@ -57,29 +59,56 @@ function Counter({ value, label }: { value: string, label: string }) {
 }
 
 const COLLABORAZIONI = [
-  'Dismat.it',
-  'La Sapienza Roma',
+  'Dismat S.r.l.',
+  'Associazione MASTER',
+  'Ordine Regionale dei Geologi Sicilia',
+  'Ordine degli Ingegneri di Sicilia',
+  'Ordine degli Architetti di Sicilia',
   'Politecnico di Milano',
-  'Università di Palermo',
-  'ETH Zürich',
-  'TU Delft',
-  'MIT',
-  'CNR — IRPI',
+  'Università di Messina',
   'Università di Catania',
-  'Università Federico II',
+  'Politecnico di Torino',
+  'Università Politecnica delle Marche',
+  'Università degli Studi di Enna "Kore"',
+  'Università di Palermo',
+  'Università Mercatorum',
+  'Università degli Studi del Sannio',
+  'Università degli Studi di Padova',
+  'Università degli Studi di Bergamo',
+  'Università degli Studi del Molise',
+  'Sapienza Università di Roma',
+  'Università degli Studi di Perugia',
+  'Università degli Studi di Ferrara',
+  'DSD Dezi Steel Design Srl',
+  'CSPFea – Engineering Solutions',
+  'GNR S.r.l.',
+  'TRE ERRE Ingegneria S.r.l.',
+  'SINA S.p.A.',
+  'ANSFISA',
+  'ECOSISM S.r.l.',
+  'CHIMETEC s.a.s.',
+  'Geosurveys S.r.l.',
+  'Boviar S.r.l.',
+  'ISI Ingegneria Sismica Italiana',
+  'Licata S.p.A.',
 ]
 
 const COMMITTENTI = [
   'ANAS',
   "Autostrade per l'Italia",
-  'FS Italiane',
+  'Aziende Sanitarie Provinciali (ASP)',
+  'RAI WAY S.p.A.',
+  'Soprintendenza per i Beni Culturali e Ambientali',
+  'Guardia Costiera',
+  'Società Ultragas S.p.A.',
   'RFI',
-  'Ministero Infrastrutture',
-  'Sport e Salute',
-  'Webuild',
-  'Provincia di Salerno',
-  'Soprintendenza ABAP',
-  'Concessioni Autostradali Venete',
+  'Consorzio Autostrade Siciliano (CAS)',
+  'Italgas',
+  'Poste Italiane',
+  'Banca Monte dei Paschi di Siena',
+  'Banco BPM',
+  'FASTWEB',
+  'Comuni, Province e Regioni',
 ]
 
 const PREVIEW_COUNT = 5
@@ -88,8 +117,18 @@ export function Home() {
   const mainRef = useRef<HTMLDivElement>(null)
   const cursorRef = useRef<HTMLDivElement>(null)
   const followerRef = useRef<HTMLDivElement>(null)
+  const sectorsCarouselRef = useRef<HTMLDivElement>(null)
   const [showAllCollab, setShowAllCollab] = useState(false)
   const [showAllCommit, setShowAllCommit] = useState(false)
+
+  const scrollSectors = (direction: -1 | 1) => {
+    const el = sectorsCarouselRef.current
+    if (!el) return
+    const card = el.querySelector<HTMLElement>('.sector-card')
+    const cardWidth = card?.offsetWidth ?? 320
+    const gap = 32
+    el.scrollBy({ left: direction * (cardWidth + gap), behavior: 'smooth' })
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -108,7 +147,7 @@ export function Home() {
         {
           opacity: 1, y: 0, scale: 1,
           duration: 0.9, stagger: 0.15, ease: 'back.out(1.2)',
-          scrollTrigger: { trigger: '.sectors-grid', start: 'top 80%', toggleActions: 'play none none none' }
+          scrollTrigger: { trigger: '.sectors-carousel-wrap', start: 'top 80%', toggleActions: 'play none none none' }
         }
       )
 
@@ -237,15 +276,15 @@ export function Home() {
               animate={{ opacity: 1 }}
               transition={{ duration: 2, ease: 'easeInOut', delay: 0.4 }}
             >
-              DALL'ACCADEMIA
+              UN PONTE TRA ESPERIENZA
             </motion.span>
             <motion.span
               className="hero-bottom-line"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 2, ease: 'easeInOut', delay: 5 }}
+              transition={{ duration: 2, ease: 'easeInOut', delay: 3 }}
             >
-              ALLA REALTÀ STRUTTURALE
+              E INNOVAZIONE
             </motion.span>
           </div>
           {/* Logo centrato */}
@@ -254,15 +293,9 @@ export function Home() {
               src="/loghi/logochiaro.png"
               alt="L&M Ingegneria"
               className="hero-logo-img"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{
-                duration: 6,
-                ease: 'easeInOut',
-                times: [0, 0.6, 1],
-                repeat: Infinity,
-                repeatDelay: 0.3,
-              }}
+              initial={{ opacity: 0.4 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 4, ease: 'easeInOut' }}
             />
           </div>
         </section>
@@ -272,21 +305,18 @@ export function Home() {
           <div className="grid-2">
             <div className="reveal">
               <h3 className="section-tag">Lo Studio</h3>
-              <h2 className="section-title">
-                L&M <span className="text-gradient">Ingegneria</span>
-              </h2>
+              <img src="/loghi/1%20995.png" alt="L&M Ingegneria" className="studio-logo" />
               <Button variant="secondary" to="/studio" className="mt-3">Approfondisci la nostra storia</Button>
             </div>
             <div className="reveal" style={{ animationDelay: '0.2s' }}>
               <p className="lead-text">
-                L&M Ingegneria nasce dalla visione del <strong>Prof. Elio Lo Giudice</strong> e del <strong>Prof. Giuseppe Mugnos</strong>.
-                La nostra missione è traslare la ricerca d'avanguardia in soluzioni strutturali concrete ed efficienti.
+                L&M Ingegneria nasce dall'incontro tra due generazioni e una stessa visione dell'ingegneria: rigorosa, innovativa e profondamente responsabile. Siamo gli ingegneri <strong>Elio Lo Giudice</strong> e <strong>Giuseppe Mugnos</strong>, e il nostro studio è il risultato di un percorso condiviso che unisce oltre trent'anni di esperienza professionale alla spinta dell'innovazione e della ricerca scientifica.
               </p>
               <p className="body-text">
-                Operiamo nel settore dell'ingegneria civile pesante, specializzandoci nella progettazione,
-                direzione lavori e collaudo di opere d'arte complesse. Ogni progetto è affrontato con un
-                approccio analitico rigoroso, supportato dai più moderni strumenti di calcolo e da una
-                profonda conoscenza normativa.
+                Insieme, dal 2019 progettiamo edifici civili e infrastrutture come ponti, gallerie e opere complesse integrando modellazione numerica avanzata, conoscenza del cantiere e competenze multidisciplinari nei settori strutturale, infrastrutturale, geotecnico e forense. Trasformiamo la complessità in soluzioni sicure, durature e orientate al futuro.
+              </p>
+              <p className="body-text">
+                L&M Ingegneria è un ponte tra esperienza e innovazione, tra metodo e visione, tra ricerca e costruzione.
               </p>
             </div>
           </div>
@@ -299,35 +329,50 @@ export function Home() {
               <h3 className="section-tag">Eccellenza Operativa</h3>
               <h2 className="section-title">I Nostri Settori Chiave</h2>
             </div>
-            <div className="sectors-grid">
+            <div className="sectors-carousel-wrap">
+              <button
+                className="carousel-btn prev"
+                onClick={() => scrollSectors(-1)}
+                aria-label="Settore precedente"
+              >
+                <ChevronLeft size={22} />
+              </button>
+              <div className="sectors-carousel" ref={sectorsCarouselRef}>
               {[
                 {
                   id: 'strutturale',
                   title: 'Ingegneria Strutturale',
                   icon: <Building2 size={24} strokeWidth={1.5} />,
-                  desc: 'Progettazione strutturale di edifici e opere d\'arte, analisi sismica e modellazione FEM 3D.',
+                  desc: 'Progettazione, verifica, diagnosi e consolidamento di strutture civili e industriali, con attenzione a sicurezza, durabilità e prestazioni sismiche.',
                   img: 'https://loremflickr.com/1600/1000/skyscraper,structure?lock=1001',
                 },
                 {
                   id: 'infrastrutturale',
                   title: 'Ingegneria Infrastrutturale',
                   icon: <Construction size={24} strokeWidth={1.5} />,
-                  desc: 'Ponti, viadotti, gallerie e opere d\'arte stradali e ferroviarie di rilievo strategico.',
+                  desc: 'Progettazione di nuove infrastrutture e consulenza diagnostica per interventi su opere esistenti, orientati a funzionalità, sicurezza e sostenibilità.',
                   img: 'https://loremflickr.com/1600/1000/highway,bridge?lock=1003',
-                },
-                {
-                  id: 'forense',
-                  title: 'Ingegneria Forense',
-                  icon: <ScanSearch size={24} strokeWidth={1.5} />,
-                  desc: 'Perizie tecniche, indagini su cedimenti e crolli, consulenza per contenziosi civili e penali.',
-                  img: 'https://loremflickr.com/1600/1000/crack,wall?lock=1005',
                 },
                 {
                   id: 'geotecnica',
                   title: 'Ingegneria Geotecnica',
                   icon: <Mountain size={24} strokeWidth={1.5} />,
-                  desc: 'Caratterizzazione del sottosuolo, fondazioni profonde, stabilità di pendii e opere di sostegno.',
+                  desc: 'Analisi del complesso geotecnico, cedimenti fondazionali, progettazione di fondazioni, fronti di scavo e stabilizzazione dei versanti.',
                   img: 'https://loremflickr.com/1600/1000/excavation,foundation?lock=1007',
+                },
+                {
+                  id: 'forense',
+                  title: 'Ingegneria Forense',
+                  icon: <ScanSearch size={24} strokeWidth={1.5} />,
+                  desc: 'Consulenze tecniche e accertamenti su danni, dissesti e contenziosi, con valutazioni documentate e indipendenti.',
+                  img: 'https://loremflickr.com/1600/1000/crack,wall?lock=1005',
+                },
+                {
+                  id: 'monitoraggio',
+                  title: 'Monitoraggio Strutturale',
+                  icon: <Activity size={24} strokeWidth={1.5} />,
+                  desc: 'Sistemi di monitoraggio statico e dinamico per edifici e infrastrutture, a supporto di manutenzione, gestione e prevenzione.',
+                  img: 'https://loremflickr.com/1600/1000/iot?lock=1009',
                 },
               ].map((sector, index) => (
                 <div key={index} className="sector-card glass-card reveal" onMouseMove={handle3DMove} onMouseLeave={handle3DLeave}>
@@ -342,6 +387,14 @@ export function Home() {
                   </div>
                 </div>
               ))}
+              </div>
+              <button
+                className="carousel-btn next"
+                onClick={() => scrollSectors(1)}
+                aria-label="Settore successivo"
+              >
+                <ChevronRight size={22} />
+              </button>
             </div>
           </div>
         </section>
@@ -418,9 +471,9 @@ export function Home() {
                 <h2 className="section-title">Progetti realizzati</h2>
               </div>
               <p className="featured-intro">
-                Una selezione delle opere che meglio rappresentano il nostro metodo
-                di lavoro: dall'analisi sismica avanzata al consolidamento geotecnico,
-                fino al restauro strutturale di edifici monumentali.
+                Una selezione di consulenze e progetti significativi che raccontano il nostro
+                metodo di lavoro: dalla diagnosi e progettazione strutturale agli interventi
+                infrastrutturali, dalle analisi geotecniche allo studio di monitoraggio strutturale.
               </p>
             </div>
 
@@ -464,46 +517,37 @@ export function Home() {
         {/* ACADEMIC COLLABORATION WITH DISMAT */}
         <section className="section-padding container">
           <div className="dismat-collaboration glass-card p-5 reveal">
-            <div className="grid-2-valign">
-              <div>
-                <h3 className="section-tag">Partnership Accademica</h3>
-                <h2 className="section-title">Focus sulla<br />Diagnostica Materica</h2>
-                <p className="body-text">
-                  Collaboriamo strettamente con <strong>Dismat.it</strong>, ente indipendente
-                  ed eccellenza nella diagnostica dei materiali, presente anche all'interno
-                  del nostro laboratorio per le attività di analisi e verifica.
-                  Questa separazione tra progettazione e verifica garantisce una trasparenza
-                  totale e un rigore analitico superiore.
-                </p>
-                <Button variant="secondary" href="http://dismat.it" target="_blank">
-                  Visita Dismat.it <ExternalLink size={16} />
-                </Button>
-              </div>
-              <div className="dismat-card-wrap d-none-mobile">
-                <div className="dismat-glow" aria-hidden="true" />
-                <div className="dismat-card">
-                  <span className="dismat-badge">
-                    <BadgeCheck size={14} /> Partner ufficiale
-                  </span>
-                  <img
-                    src="/1527004967503_logo_dismat_banner_N.jpg"
-                    alt="Dismat.it — Diagnostica Materica"
-                    className="dismat-logo"
-                  />
-                  <div className="dismat-card-footer">
-                    <span className="dismat-meta">Laboratorio di Diagnostica</span>
-                    <a
-                      href="http://dismat.it"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="dismat-link"
-                    >
-                      dismat.it <ExternalLink size={11} />
-                    </a>
-                  </div>
-                </div>
-              </div>
+            <h3 className="section-tag">Partnership Tecnica</h3>
+            <div className="dismat-title-row">
+              <h2 className="section-title dismat-title">Competenze integrate<br />nel Laboratorio DISMAT</h2>
+              <img
+                src="/1527004967503_logo_dismat_banner_N.jpg"
+                alt="Dismat.it — Diagnostica Materica"
+                className="dismat-logo-standalone d-none-mobile"
+              />
             </div>
+            <p className="body-text">
+              Il ruolo centrale rivestito all'interno del Laboratorio <strong>DISMAT</strong> rappresenta
+              per noi un elemento distintivo del nostro modus operandi. L'Ing. Lo Giudice ricopre il
+              ruolo di Direttore del Laboratorio DISMAT, mentre l'Ing. Mugnos è Sperimentatore e
+              Responsabile del settore di dinamica strutturale, prove speciali su strutture e infrastrutture.
+            </p>
+            <p className="body-text">
+              Questi ruoli ci consentono di integrare nella nostra attività professionale dello studio
+              una solida esperienza sperimentale maturata nell'ambito delle prove ufficiali, della
+              diagnostica strutturale e delle indagini investigative su strutture e infrastrutture.
+              Il fatto che svolgiamo attività di laboratorio ci permette di interpretare i dati di prova
+              con maggiore consapevolezza, collegando le condizioni reali dell'opera alle scelte
+              progettuali più adeguate.
+            </p>
+            <p className="body-text">
+              Per i nostri clienti, questo significa poter contare su un approccio completo e affidabile,
+              fondato su dati oggettivi, esperienza sul campo e conoscenza diretta del comportamento
+              statico e dinamico di strutture e infrastrutture.
+            </p>
+            <Button variant="secondary" href="http://dismat.it" target="_blank">
+              Visita Dismat.it <ExternalLink size={16} />
+            </Button>
           </div>
         </section>
 
@@ -511,18 +555,17 @@ export function Home() {
         <footer id="contatti" className="footer section-padding">
           <div className="container grid-footer">
             <div className="reveal">
-              <h1 className="footer-logo">L&M INGEGNERIA</h1>
+              <img src="/loghi/1%20995.png" alt="L&M Ingegneria" className="footer-logo" />
               <p className="footer-desc">
-                Eccellenza nella progettazione infrastrutturale. <br />
-                Dall'analisi accademica alla realizzazione.
+                Un ponte tra esperienza e innovazione.
               </p>
             </div>
             <div className="reveal">
               <h4 className="footer-title">Contatti</h4>
               <ul className="footer-contact-list">
                 <li><MapPin size={18} /> Contrada Andolina, Canicattì (AG)</li>
-                <li><Phone size={18} /> +39 06 1234567</li>
-                <li><Mail size={18} /> info@lmingegneria.it</li>
+                <li><Phone size={18} /> Elio Lo Giudice — +39 334 176 5539</li>
+                <li><Phone size={18} /> Giuseppe Mugnos — +39 328 162 3648</li>
               </ul>
             </div>
             <div className="reveal">
@@ -657,6 +700,16 @@ export function Home() {
           user-select: none;
           pointer-events: none;
         }
+        .studio-logo {
+          width: clamp(240px, 32vw, 420px);
+          height: auto;
+          display: block;
+          margin-bottom: 2rem;
+          user-select: none;
+        }
+        #studio .grid-2 {
+          grid-template-columns: 2fr 3fr;
+        }
         .academic-title {
           font-size: 1.2rem;
           color: var(--accent-teal);
@@ -728,12 +781,53 @@ export function Home() {
         .mb-5 { margin-bottom: 4rem; }
         .p-5 { padding: 4rem; }
 
-        /* SECTORS */
-        .sectors-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 2rem;
+        /* SECTORS CAROUSEL */
+        .sectors-carousel-wrap {
+          position: relative;
         }
+        .sectors-carousel {
+          display: flex;
+          gap: 2rem;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          scroll-behavior: smooth;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          padding: 0.5rem 0.25rem 1.5rem;
+          margin: 0 -0.25rem;
+        }
+        .sectors-carousel::-webkit-scrollbar { display: none; }
+        .sectors-carousel > .sector-card {
+          flex: 0 0 calc((100% - 4rem) / 3);
+          scroll-snap-align: start;
+          min-width: 0;
+        }
+        .carousel-btn {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(10,10,10,0.9);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255,255,255,0.1);
+          color: var(--white);
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 5;
+          transition: background 0.3s, border-color 0.3s, transform 0.3s;
+        }
+        .carousel-btn:hover {
+          background: var(--accent-teal);
+          border-color: var(--accent-teal);
+          color: var(--bg-primary);
+          transform: translateY(-50%) scale(1.05);
+        }
+        .carousel-btn.prev { left: -22px; }
+        .carousel-btn.next { right: -22px; }
         .sector-card {
           overflow: hidden;
           position: relative;
@@ -829,92 +923,27 @@ export function Home() {
         .featured-cta { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--accent-teal); color: var(--bg-primary); padding: 1rem 2rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: transform 0.3s, box-shadow 0.3s; }
         .featured-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(35,172,181,0.35); }
 
-        /* DISMAT PARTNERSHIP CARD */
-        .dismat-card-wrap {
-          position: relative;
+        /* DISMAT PARTNERSHIP */
+        .dismat-title-row {
           display: flex;
-          justify-content: center;
           align-items: center;
-          padding: 1rem;
+          justify-content: space-between;
+          gap: 2rem;
+          margin-bottom: 1.75rem;
+          flex-wrap: wrap;
         }
-        .dismat-glow {
-          position: absolute;
-          width: 320px;
-          height: 320px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(35,172,181,0.18) 0%, transparent 70%);
-          filter: blur(28px);
-          pointer-events: none;
-          z-index: 0;
+        .dismat-title {
+          margin-bottom: 0;
+          flex: 1 1 auto;
+          min-width: 0;
         }
-        .dismat-card {
-          position: relative;
-          z-index: 1;
-          max-width: 360px;
-          width: 100%;
-          background: #fff;
-          border-radius: 14px;
-          padding: 1.25rem 1.5rem 1rem;
-          box-shadow: 0 24px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.06);
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), box-shadow 0.6s;
-        }
-        .dismat-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 32px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(35,172,181,0.35);
-        }
-        .dismat-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.35rem;
-          align-self: flex-start;
-          background: rgba(35,172,181,0.1);
-          color: var(--accent-teal);
-          font-size: 0.7rem;
-          font-weight: 700;
-          letter-spacing: 1.5px;
-          text-transform: uppercase;
-          padding: 0.3rem 0.7rem;
-          border-radius: 999px;
-          border: 1px solid rgba(35,172,181,0.25);
-        }
-        .dismat-logo {
-          width: 100%;
+        .dismat-logo-standalone {
+          width: clamp(180px, 22vw, 260px);
           height: auto;
           object-fit: contain;
           display: block;
-        }
-        .dismat-card-footer {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 1rem;
-          padding-top: 0.75rem;
-          border-top: 1px solid rgba(10,10,10,0.08);
-        }
-        .dismat-meta {
-          font-size: 0.72rem;
-          color: #555;
-          text-transform: uppercase;
-          letter-spacing: 1.5px;
-          font-weight: 600;
-        }
-        .dismat-link {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.3rem;
-          color: var(--accent-teal);
-          font-size: 0.78rem;
-          font-weight: 700;
-          letter-spacing: 0.5px;
-          text-decoration: none;
-          transition: gap 0.3s ease, color 0.3s ease;
-        }
-        .dismat-link:hover {
-          gap: 0.45rem;
-          color: #178f97;
+          flex-shrink: 0;
+          filter: drop-shadow(0 12px 30px rgba(0,0,0,0.45));
         }
 
         /* NETWORK BOXES */
@@ -1022,12 +1051,22 @@ export function Home() {
             gap: 3rem;
           }
           .d-none-mobile { display: none; }
-          .sectors-grid, .numbers-grid {
+          .numbers-grid {
             grid-template-columns: 1fr;
+          }
+          .sectors-carousel > .sector-card {
+            flex: 0 0 calc((100% - 2rem) / 2);
           }
           .hero-main-title { font-size: 3rem; }
           .section-title { font-size: 2.2rem; }
           .hero-video-container { width: 100%; }
+        }
+        @media (max-width: 640px) {
+          .sectors-carousel > .sector-card {
+            flex: 0 0 88%;
+          }
+          .carousel-btn.prev { left: 4px; }
+          .carousel-btn.next { right: 4px; }
         }
 
         /* HERO PARTICLES */

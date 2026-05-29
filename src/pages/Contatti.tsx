@@ -9,10 +9,10 @@ import { Link } from 'react-router-dom'
 gsap.registerPlugin(ScrollTrigger)
 
 const CONTACT_INFO = [
-  { icon: MapPin,  label: 'Sede',     value: 'Contrada Andolina',  sub: 'Canicattì (AG), 92024 — Italia' },
-  { icon: Phone,   label: 'Telefono', value: '+39 06 1234567',            sub: 'Lun–Ven 9:00–18:00' },
-  { icon: Mail,    label: 'Email',    value: 'info@lmingegneria.it',       sub: 'Risposta entro 24h lavorative' },
-  { icon: Clock,   label: 'Orari',    value: 'Lun–Ven 9:00–18:00',        sub: 'Sabato su appuntamento' },
+  { icon: MapPin,  label: 'Sede',                  value: 'Contrada Andolina',     sub: 'Canicattì (AG), 92024 — Italia' },
+  { icon: Phone,   label: 'Ing. Elio Lo Giudice',  value: '+39 334 176 5539',      sub: 'Lun–Ven 9:00–18:00' },
+  { icon: Phone,   label: 'Ing. Giuseppe Mugnos',  value: '+39 328 162 3648',      sub: 'Lun–Ven 9:00–18:00' },
+  { icon: Clock,   label: 'Orari',                 value: 'Lun–Ven 9:00–18:00',    sub: 'Sabato su appuntamento' },
 ]
 
 const FAQ = [
@@ -377,18 +377,17 @@ export function Contatti() {
         <footer className="footer section-padding">
           <div className="container grid-footer">
             <div className="reveal">
-              <h1 className="footer-logo">L&M INGEGNERIA</h1>
+              <img src="/loghi/1%20995.png" alt="L&M Ingegneria" className="footer-logo" />
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '300px' }}>
-                Eccellenza nella progettazione infrastrutturale.<br />
-                Dall'analisi accademica alla realizzazione.
+                Un ponte tra esperienza e innovazione.
               </p>
             </div>
             <div className="reveal">
               <h4 className="footer-title">Contatti</h4>
               <ul className="footer-contact-list">
                 <li><MapPin size={18} /> Contrada Andolina, Canicattì (AG)</li>
-                <li><Phone size={18} /> +39 06 1234567</li>
-                <li><Mail size={18} /> info@lmingegneria.it</li>
+                <li><Phone size={18} /> Elio Lo Giudice — +39 334 176 5539</li>
+                <li><Phone size={18} /> Giuseppe Mugnos — +39 328 162 3648</li>
               </ul>
             </div>
             <div className="reveal">

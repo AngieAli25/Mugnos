@@ -7,9 +7,9 @@
     --accent-teal: #23ACB5;
     --white: #FFFFFF;
 
-    --font-serif: "Inter", "Helvetica Neue", Arial, sans-serif;
+    --font-serif: "Times New Roman", Times, serif;
     --font-sans: "Roboto", sans-serif;
-    --font-display: "Inter", "Helvetica Neue", Arial, sans-serif;
+    --font-display: "Times New Roman", Times, serif;
 
     --container-max-width: 1200px;
     --header-height: 80px;
@@ -77,9 +77,8 @@ h4,
 h5,
 h6 {
     font-family: var(--font-display);
-    font-weight: 500;
+    font-weight: 700;
     line-height: 1.2;
-    letter-spacing: -0.01em;
 }
 
 a {
@@ -164,6 +163,15 @@ ul {
 .reveal {
     opacity: 0;
     transform: translateY(30px);
+}
+
+/* Footer logo image override (when .footer-logo is on an <img>) */
+img.footer-logo {
+    width: clamp(200px, 22vw, 260px);
+    height: auto;
+    display: block;
+    margin-bottom: 1.5rem;
+    user-select: none;
 }
 
 /* Scrollbar Customization */
