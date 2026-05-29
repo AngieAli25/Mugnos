@@ -118,6 +118,8 @@ export function Home() {
   const cursorRef = useRef<HTMLDivElement>(null)
   const followerRef = useRef<HTMLDivElement>(null)
   const sectorsCarouselRef = useRef<HTMLDivElement>(null)
+  const heroVideoRef = useRef<HTMLVideoElement>(null)
+  const heroLogoRef = useRef<HTMLImageElement>(null)
   const [showAllCollab, setShowAllCollab] = useState(false)
   const [showAllCommit, setShowAllCommit] = useState(false)
 
@@ -129,6 +131,24 @@ export function Home() {
     const gap = 32
     el.scrollBy({ left: direction * (cardWidth + gap), behavior: 'smooth' })
   }
+
+  // Hero video plays a pre-rendered forward+reverse loop (smooth, no JS-driven seeking).
+  // Logo opacity follows a triangular wave: 0.4 at the ends (empty/empty bridge) and 1.0 at the midpoint (assembled bridge).
+  useEffect(() => {
+    const video = heroVideoRef.current
+    const logo = heroLogoRef.current
+    if (!video || !logo) return
+
+    const onTimeUpdate = () => {
+      if (!video.duration) return
+      const progress = video.currentTime / video.duration
+      const triangle = 1 - Math.abs(2 * progress - 1)
+      logo.style.opacity = String(0.4 + 0.6 * triangle)
+    }
+
+    video.addEventListener('timeupdate', onTimeUpdate)
+    return () => video.removeEventListener('timeupdate', onTimeUpdate)
+  }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -252,20 +272,13 @@ export function Home() {
           {/* Full-screen video background */}
           <div className="hero-video-container">
             <video
+              ref={heroVideoRef}
               autoPlay
               muted
+              loop
               playsInline
               className="hero-video-bg"
-              src="/nuova versione video mugnoss.mp4"
-              onLoadedMetadata={(e) => {
-                e.currentTarget.currentTime = 3
-                e.currentTarget.playbackRate = 1.25
-              }}
-              onEnded={(e) => {
-                e.currentTarget.currentTime = 3
-                e.currentTarget.playbackRate = 1.25
-                e.currentTarget.play().catch(() => {})
-              }}
+              src="/ponte_3_loop.mp4"
             />
           </div>
           {/* Testo bottom-left */}
@@ -289,13 +302,12 @@ export function Home() {
           </div>
           {/* Logo centrato */}
           <div className="hero-logo-right">
-            <motion.img
+            <img
+              ref={heroLogoRef}
               src="/loghi/logochiaro.png"
               alt="L&M Ingegneria"
               className="hero-logo-img"
-              initial={{ opacity: 0.4 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 4, ease: 'easeInOut' }}
+              style={{ opacity: 0.4, transition: 'opacity 80ms linear' }}
             />
           </div>
         </section>
