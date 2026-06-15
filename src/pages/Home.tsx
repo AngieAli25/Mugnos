@@ -138,6 +138,9 @@ export function Home() {
     const logo = heroLogoRef.current
     if (!video || !logo) return
 
+    // Rallenta leggermente la riproduzione del video hero (15% più lento)
+    video.playbackRate = 0.85
+
     const onTimeUpdate = () => {
       if (!video.duration) return
       const progress = video.currentTime / video.duration
@@ -415,9 +418,9 @@ export function Home() {
           <div className="container">
             <div className="numbers-grid-3">
               {[
-                { label: 'Anni di Attività', value: '25+' },
-                { label: 'Progetti Completati', value: '450+' },
-                { label: 'Partner Accademici', value: '12' }
+                { label: 'Anni di Esperienza', value: '30+' },
+                { label: 'Committenti di Rilievo', value: '100+' },
+                { label: 'Progetti di Rilievo Completati', value: '200+' }
               ].map((n, i) => (
                 <Counter key={i} value={n.value} label={n.label} />
               ))}
