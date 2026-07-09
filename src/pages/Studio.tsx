@@ -13,7 +13,7 @@ import {
   Microscope,
   Globe,
   ChevronDown,
-  ChevronRight,
+  FileText,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -24,7 +24,6 @@ const TIMELINE = [
   { year: '2017', title: 'Una sintonia che cresce', desc: 'Negli anni successivi la collaborazione professionale si consolida, unendo l\'esperienza maturata sul campo alla spinta dell\'innovazione e della ricerca scientifica.' },
   { year: '2019', title: 'Lo Studio Associato', desc: 'Nasce ufficialmente lo Studio Associato di Ingegneria Strutturale "Lo Giudice & Mugnos": un nome che unisce due storie, ma una sola identità.' },
   { year: '2021', title: 'Specializzazione e crescita', desc: 'Lo studio amplia il proprio raggio d\'azione, diventando un riferimento per la progettazione strutturale e infrastrutturale e per il recupero del patrimonio esistente.' },
-  { year: '2024', title: 'Quattro macro-settori', desc: 'L\'attività si articola ufficialmente nei quattro settori: Strutturale, Infrastrutturale, Geotecnica e Forense, con il monitoraggio strutturale come ambito trasversale.' },
   { year: '2026', title: 'Un ponte tra esperienza e innovazione', desc: 'Una nuova identità di marca racconta il senso del nostro percorso: integrare ricerca, metodo e costruzione per opere che durino nel tempo.' },
 ]
 
@@ -39,39 +38,47 @@ const VALUES = [
 
 const ACCORDION_ELIO = [
   {
-    title: 'Esperienza e percorso professionale',
-    body: 'Oltre trent\'anni di attività nella progettazione strutturale e infrastrutturale. Ha contribuito a opere di rilievo nazionale, dai ponti autostradali agli interventi su strutture esistenti, con particolare attenzione alle verifiche sismiche e al recupero del patrimonio strutturale.',
+    title: 'Percorso ed esperienza professionale',
+    body: 'Laureato in Ingegneria Civile a Pisa, l\'Ing. Elio Lo Giudice ha maturato una lunga esperienza nella progettazione strutturale e infrastrutturale, operando per enti pubblici, università, tribunali e committenti privati. Nel corso della propria attività ha svolto incarichi come progettista, direttore lavori, collaudatore, consulente specialistico e CTU, seguendo edifici pubblici, strutture scolastiche, opere industriali, ponti, viadotti e interventi su strutture esistenti.',
   },
   {
-    title: 'Competenze chiave',
-    body: 'Progettazione strutturale e infrastrutturale, verifiche sismiche e diagnostica avanzata, sperimentazione su strutture e infrastrutture, direzione lavori e collaudi statici e dinamici.',
+    title: 'Competenze e approccio',
+    body: 'Il suo lavoro si distingue per metodo, rigore tecnico e capacità di interpretare la reale condizione delle opere, considerando struttura, materiali, contesto e criticità esistenti. Opera nei settori della progettazione strutturale e infrastrutturale, delle verifiche sismiche, della diagnostica avanzata, delle prove sperimentali, dell\'ingegneria forense e degli interventi di consolidamento e adeguamento sismico, con l\'obiettivo di individuare soluzioni affidabili, adeguate e durature.',
   },
   {
-    title: 'Ruolo nel Laboratorio DISMAT',
-    body: 'Direttore del Laboratorio DISMAT. La sua attività di laboratorio si integra costantemente con quella progettuale dello studio, garantendo dati oggettivi e un controllo diretto sulle prove a supporto delle scelte progettuali.',
+    title: 'Laboratorio DISMAT',
+    body: 'Il ruolo di Direttore del Laboratorio DISMAT rappresenta uno degli elementi distintivi del suo profilo professionale. L\'esperienza nelle prove ufficiali sui materiali da costruzione, nelle indagini sperimentali e nella diagnostica strutturale consente di integrare la progettazione con dati, osservazioni e verifiche dirette, rafforzando il rapporto tra calcolo, prova e interpretazione tecnica.',
   },
   {
-    title: 'Opere e collaborazioni significative',
-    body: 'Attività di sperimentazione e verifica del ponte stradale "Federico II di Svevia" a Licata. Collaborazioni con enti istituzionali, atenei e committenti pubblici e privati su tutto il territorio nazionale.',
+    title: 'Progetti e collaborazioni',
+    body: 'Nel corso della propria attività, l\'Ing. Elio Lo Giudice ha collaborato con enti pubblici, amministrazioni, società infrastrutturali e realtà private di rilievo nazionale, tra cui ANAS, Autostrade per l\'Italia, RAI Way, Province e Comuni. Ha contribuito a interventi di verifica, progettazione e riqualificazione di ponti, viadotti, edifici pubblici, strutture scolastiche, ospedaliere e opere complesse, occupandosi di sicurezza strutturale, valutazioni sismiche, diagnostica e caratterizzazione dinamica.',
+  },
+  {
+    title: 'Ricerca, didattica e cultura tecnica',
+    body: 'Accanto all\'attività professionale, ha svolto incarichi universitari, attività di ricerca applicata, partecipazione ad associazioni tecniche e collaborazioni con organismi del settore. È autore di contributi scientifici su diagnostica strutturale, dinamica sperimentale, sistemi di isolamento, monitoraggio delle infrastrutture e metodologie innovative per la valutazione della sicurezza strutturale.',
   },
 ]
 
 const ACCORDION_GIUSEPPE = [
   {
     title: 'Formazione e percorso',
-    body: 'Ingegnere civile, ha iniziato il proprio percorso professionale nel 2015 con un tirocinio presso gli uffici tecnici comunali di Licata, durante il quale ha incontrato Elio Lo Giudice. Da allora il rapporto professionale si è consolidato fino alla fondazione dello Studio Associato nel 2019.',
+    body: 'Laureato con lode in Ingegneria Civile, indirizzo Strutture e Geotecnica, presso l\'Università degli Studi di Palermo, ha orientato fin dall\'inizio il proprio percorso verso la dinamica strutturale, la sperimentazione e la vulnerabilità sismica delle opere esistenti. Ha maturato esperienza nella progettazione strutturale ed infrastrutturale, diagnostica, verifiche di sicurezza e interventi di consolidamento, miglioramento e adeguamento sismico su edifici e infrastrutture. Nel luglio 2026 ha concluso il Dottorato in "Sistemi Intelligenti per l\'Ingegneria" presso l\'Università Kore di Enna, svolgendo attività di ricerca nel Laboratorio L.E.D.A. su prove EMA/OMA, caratterizzazione di isolatori e smorzatori, test sismici su tavola vibrante e aggiornamento modale di modelli FEM.',
   },
   {
-    title: 'Aree di specializzazione',
-    body: 'Dinamica strutturale, monitoraggio statico e dinamico, prove speciali su strutture e infrastrutture, modellazione numerica avanzata e integrazione tra ricerca scientifica e attività progettuale.',
+    title: 'Competenze e metodo',
+    body: 'Si occupa di progettazione strutturale e infrastrutturale, diagnostica, prove dinamiche, modellazione FEM, verifiche di sicurezza e interventi di consolidamento, miglioramento e adeguamento sismico. Il suo metodo integra dati sperimentali, modellazione numerica e lettura critica del comportamento reale delle strutture. Il suo approccio nasce dall\'idea che l\'ingegneria debba interpretare il comportamento reale delle strutture, anticipare scenari e innovare i processi progettuali.',
   },
   {
-    title: 'Ruolo nel Laboratorio DISMAT',
-    body: 'Sperimentatore e Responsabile del settore di dinamica strutturale e prove speciali del Laboratorio DISMAT. Coordina campagne sperimentali su edifici, ponti, viadotti e infrastrutture complesse.',
+    title: 'Laboratorio DISMAT',
+    body: 'In qualità di sperimentatore certificato (VT e DT – UNI/PdR 56:2019), presso il Laboratorio DISMAT l\'Ing. Mugnos esegue indagini non distruttive, prove dinamiche, indagini strutturali e controllo sperimentale delle opere. Le qualifiche conseguite nel campo dell\'ispezione visiva delle opere civili e infrastrutturali e della misura di deformazioni e tensioni rafforzano il legame tra attività progettuale e conoscenza diretta del comportamento strutturale. Ha partecipato a campagne diagnostiche su ponti, viadotti, gallerie, edifici strategici e infrastrutture complesse, integrando dati sperimentali e modellazione numerica per interpretare il comportamento delle opere.',
   },
   {
-    title: 'Visione e contributo allo studio',
-    body: 'Porta nello studio la spinta dell\'innovazione e della ricerca scientifica, integrando le metodologie più avanzate con la solidità dell\'esperienza maturata sul campo dal co-fondatore.',
+    title: 'Progetti e collaborazioni',
+    body: 'Ha contribuito a interventi per ANAS, Autostrade per l\'Italia, RAI Way, Province, Comuni e società private, operando su ponti, viadotti, edifici strategici, gallerie, strutture industriali e infrastrutture complesse. Tra le attività principali rientrano verifiche di sicurezza, valutazioni sismiche, campagne diagnostiche, prove dinamiche, caratterizzazione sperimentale di opere esistenti, progettazione di sistemi di monitoraggio e progettazione di adeguamenti sismici. Ha inoltre partecipato ad attività sperimentali su strutture e infrastrutture di particolare rilievo, integrando prove in campo, modellazione numerica e interpretazione dei risultati.',
+  },
+  {
+    title: 'Pubblicazioni e attività scientifica',
+    body: 'L\'attività professionale è affiancata da contributi scientifici e tecnici su diagnostica strutturale, dinamica sperimentale, monitoraggio, modellazione numerica, sistemi di isolamento, algoritmi di ottimizzazione e vulnerabilità sismica. Ha partecipato a conferenze e congressi nazionali e internazionali, tra cui AICAP, AIMETA, EMI, IF CRASC e SENSOR, contribuendo allo sviluppo di metodologie innovative per la valutazione della sicurezza strutturale. La sua produzione scientifica riflette una visione dell\'ingegneria in cui ricerca e professione sono parti di uno stesso metodo: osservare, misurare, interpretare e progettare con maggiore consapevolezza.',
   },
 ]
 
@@ -300,10 +307,10 @@ export function Studio() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
-              style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}
+              style={{ maxWidth: '1050px', margin: '0 auto', textAlign: 'center' }}
             >
               <h3 className="section-tag">La Nostra Storia</h3>
-              <h1 className="hero-main-title">Un Ponte tra <span className="text-gradient">Esperienza e Innovazione</span></h1>
+              <h1 className="hero-main-title">Un Ponte tra <br /><span className="text-gradient" style={{ whiteSpace: 'nowrap' }}>Esperienza e Innovazione</span></h1>
               <p className="hero-subtitle">
                 L&M Ingegneria nasce dall'incontro tra due generazioni e una stessa visione
                 dell'ingegneria: rigorosa, innovativa e profondamente responsabile.
@@ -376,18 +383,33 @@ export function Studio() {
                   <WordReveal text="Ing. Elio Lo Giudice" />
                 </h2>
                 <p className="body-text" style={{ marginBottom: '1rem' }}>
-                  Professionista con oltre trent'anni di esperienza nella progettazione strutturale e
-                  infrastrutturale, Elio Lo Giudice ha contribuito alla realizzazione e alla verifica di
-                  opere di rilievo nazionale, con particolare attenzione al recupero del patrimonio
-                  strutturale esistente sul piano diagnostico e progettuale.
+                  Professionista con oltre trent'anni di esperienza nel campo dell'ingegneria
+                  strutturale e infrastrutturale, Elio Lo Giudice rappresenta la radice tecnica e
+                  professionale da cui nasce L&M Ingegneria.
+                </p>
+                <p className="body-text" style={{ marginBottom: '1rem' }}>
+                  Ingegnere civile, Direttore del Laboratorio DISMAT di Canicattì e sperimentatore nel
+                  campo dei materiali e delle strutture, ha costruito un percorso fondato su
+                  progettazione, consulenza tecnica, collaudi, diagnostica strutturale e ingegneria
+                  forense.
                 </p>
                 <p className="body-text">
-                  Nell'estate del 2015, durante le attività di sperimentazione e verifica del ponte
-                  stradale "Federico II di Svevia" a Licata — opera progettata da Morandi — incontra
-                  un giovane ingegnere civile, Giuseppe Mugnos. Un incontro casuale destinato a
-                  diventare il punto di svolta da cui, nel 2019, nascerà lo Studio Associato.
+                  La sua attività si concentra sulla sicurezza delle opere, sulla conoscenza dei
+                  materiali e sul recupero del patrimonio costruito, con un approccio che unisce
+                  esperienza diretta, rigore tecnico e responsabilità verso il territorio.
                 </p>
                 <Accordion items={ACCORDION_ELIO} />
+                <a
+                  href="/cv/Elio_Lo_Giudice_CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cv-button"
+                  onMouseMove={handleMagneticMoveLink}
+                  onMouseLeave={handleMagneticLeaveLink}
+                >
+                  <FileText size={18} />
+                  <span>Scarica il curriculum</span>
+                </a>
               </div>
             </div>
           </div>
@@ -403,18 +425,35 @@ export function Studio() {
                   <WordReveal text="Ing. Giuseppe Mugnos" />
                 </h2>
                 <p className="body-text" style={{ marginBottom: '1rem' }}>
-                  Ingegnere civile, mosso fin dagli inizi da curiosità tecnica e ambizione progettuale.
-                  Nel 2015, da neolaureato, svolge il proprio tirocinio presso gli uffici tecnici comunali
-                  di Licata, dove incontra Elio Lo Giudice durante le verifiche sul ponte "Federico II
-                  di Svevia".
+                  Ingegnere civile specializzato in Strutture e Geotecnica, Giuseppe Mugnos rappresenta
+                  la componente di L&M Ingegneria più orientata alla ricerca, alla modellazione numerica
+                  e all'innovazione sperimentale. La sua attività integra progettazione strutturale,
+                  diagnostica, monitoraggio, verifiche di vulnerabilità sismica e analisi del
+                  comportamento delle opere esistenti.
+                </p>
+                <p className="body-text" style={{ marginBottom: '1rem' }}>
+                  Sperimentatore presso il Laboratorio DISMAT di Canicattì e Dottore di Ricerca in
+                  "Sistemi Intelligenti per l'Ingegneria" presso l'Università Kore di Enna, unisce libera
+                  professione e ricerca scientifica, trasferendo nel lavoro quotidiano strumenti di
+                  dinamica sperimentale, modellazione FEM e sistemi intelligenti per l'ingegneria.
                 </p>
                 <p className="body-text">
-                  Da quell'incontro nasce una sintonia che cresce negli anni, fondendo la spinta
-                  dell'innovazione e della ricerca scientifica con l'esperienza maturata sul campo.
-                  Nel 2019 nasce ufficialmente lo Studio Associato "Lo Giudice & Mugnos": un nome che
-                  unisce due storie, ma una sola identità.
+                  Il suo percorso contribuisce alla visione di L&M Ingegneria: trasformare la
+                  complessità in soluzioni sicure, durature e orientate al futuro, con particolare
+                  attenzione a ponti, viadotti, edifici e infrastrutture esistenti.
                 </p>
                 <Accordion items={ACCORDION_GIUSEPPE} />
+                <a
+                  href="/cv/Giuseppe_Mugnos_CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cv-button"
+                  onMouseMove={handleMagneticMoveLink}
+                  onMouseLeave={handleMagneticLeaveLink}
+                >
+                  <FileText size={18} />
+                  <span>Scarica il curriculum</span>
+                </a>
               </div>
               <div className="founder-img-wrap reveal">
                 <div className="founder-img-frame">
@@ -475,39 +514,6 @@ export function Studio() {
                   </div>
                 )
               })}
-            </div>
-          </div>
-        </section>
-
-        {/* SOFTWARE - STRUCTMASTER PRO X */}
-        <section id="software" className="section-padding premium-section">
-          <div className="container software-container">
-            <div className="software-visual reveal">
-              <div className="code-mockup">
-                <div className="code-header">StructMaster Pro X v8.2</div>
-                <div className="code-content">
-                  <code>ANALYSIS_TYPE: NON-LINEAR DYNAMIC</code><br />
-                  <code>LOAD_CASES: SEISMIC, TRAFFIC, WIND</code><br />
-                  <code>MESH_SIZE: 0.1m FINITE ELEMENTS</code><br />
-                  <code>STATUS: STABILITY VERIFIED [OK]</code>
-                </div>
-              </div>
-            </div>
-            <div className="software-content reveal">
-              <div className="premium-badge">STRUMENTO ESCLUSIVO</div>
-              <h2 className="section-title">La Nostra Tecnologia</h2>
-              <p className="lead-text">Il valore della precisione assoluta.</p>
-              <p className="body-text">
-                Utilizziamo in esclusiva <strong>StructMaster Pro X</strong>, il software di analisi strutturale
-                più avanzato al mondo. Sviluppato a Stoccarda, questo strumento (investimento di oltre €80.000/anno)
-                ci permette di simulare scenari sismici e di traffico con una precisione irraggiungibile dai software standard.
-              </p>
-              <ul className="feature-list">
-                <li><ChevronRight size={18} /> Analisi FEM 3D ad alta densità</li>
-                <li><ChevronRight size={18} /> Simulazione sismica in tempo reale</li>
-                <li><ChevronRight size={18} /> Integrazione completa BIM</li>
-                <li><ChevronRight size={18} /> Certificazione Eurocodici EN 1990-1999</li>
-              </ul>
             </div>
           </div>
         </section>
@@ -588,7 +594,7 @@ export function Studio() {
         /* HERO */
         .hero { width: 100%; display: flex; align-items: center; position: relative; overflow: hidden; background: var(--bg-primary); }
         .subpage-hero { height: 60vh; min-height: 480px; padding-top: var(--header-height); }
-        .hero-main-title { font-size: clamp(3.5rem, 8vw, 5.5rem); margin-bottom: 2rem; line-height: 1.05; }
+        .hero-main-title { font-size: clamp(2.6rem, 6.5vw, 4.8rem); margin-bottom: 2rem; line-height: 1.1; }
         .hero-subtitle { font-size: 1.15rem; color: var(--text-secondary); line-height: 1.7; max-width: 700px; margin: 0 auto; }
 
         /* WORD REVEAL */
@@ -665,6 +671,10 @@ export function Studio() {
         .acc-body.open { grid-template-rows: 1fr; }
         .acc-inner { overflow: hidden; }
         .acc-text { padding: 0 1.5rem 1.5rem; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.75; margin: 0; }
+
+        /* CV BUTTON */
+        .cv-button { display: inline-flex; align-items: center; gap: 0.6rem; margin-top: 2rem; padding: 0.9rem 1.75rem; background: var(--accent-teal); color: #0a0a0a; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; border-radius: 10px; will-change: transform; transition: transform 0.1s linear, box-shadow 0.3s ease, filter 0.3s ease; box-shadow: 0 12px 30px rgba(35,172,181,0.25); }
+        .cv-button:hover { filter: brightness(1.08); box-shadow: 0 16px 40px rgba(35,172,181,0.4); }
 
         /* FOOTER */
         .footer { border-top: 1px solid rgba(255,255,255,0.05); }
