@@ -359,7 +359,7 @@ export function Progetti() {
                         <span className="project-category">{project.category}</span>
                         <h3 className="project-title">{project.title}</h3>
                         <p className="project-location">
-                          <MapPin size={13} /> {project.location}
+                          <MapPin size={13} /> <span>{project.location}</span>
                         </p>
                         <p className="project-desc">{project.description}</p>
                         <span className="project-cta">
@@ -515,10 +515,17 @@ export function Progetti() {
         .project-year { position: absolute; top: 1rem; right: 1rem; background: rgba(10,10,10,0.85); backdrop-filter: blur(8px); color: var(--accent-teal); font-family: var(--font-serif); font-size: 0.95rem; font-weight: 700; padding: 0.35rem 0.75rem; border-radius: 6px; letter-spacing: 0.5px; border: 1px solid rgba(35,172,181,0.25); }
         .project-body { padding: 1.75rem; display: flex; flex-direction: column; gap: 0.85rem; flex: 1; }
         .project-category { color: var(--accent-teal); font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
-        .project-title { font-size: 1.4rem; line-height: 1.25; margin: 0; }
-        .project-location { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--text-secondary); font-size: 0.82rem; margin: 0; }
-        .project-desc { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.65; margin: 0; flex: 1; }
-        .project-cta { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--white); font-size: 0.82rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding-top: 0.5rem; align-self: flex-start; transition: gap 0.3s ease, color 0.3s ease; border-bottom: 1px solid rgba(255,255,255,0.18); padding-bottom: 0.45rem; margin-top: 0.5rem; }
+        /* Titolo, luogo e descrizione hanno altezza fissa: i testi dai documenti
+           variano molto in lunghezza e senza limiti le card risultano di altezze
+           diverse. Il testo completo resta nella scheda di dettaglio. */
+        .project-title { font-size: 1.4rem; line-height: 1.25; margin: 0; height: 2.5em;
+          display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .project-location { display: flex; align-items: center; gap: 0.4rem; color: var(--text-secondary); font-size: 0.82rem; margin: 0; }
+        .project-location svg { flex-shrink: 0; }
+        .project-location span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .project-desc { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.65; margin: 0; height: 4.95em; flex: none;
+          display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .project-cta { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--white); font-size: 0.82rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding-top: 0.5rem; align-self: flex-start; transition: gap 0.3s ease, color 0.3s ease; border-bottom: 1px solid rgba(255,255,255,0.18); padding-bottom: 0.45rem; margin-top: auto; }
         .project-card:hover .project-cta { color: var(--accent-teal); gap: 0.75rem; border-bottom-color: var(--accent-teal); }
 
         .empty-state { text-align: center; padding: 5rem 1rem; color: var(--text-secondary); }
