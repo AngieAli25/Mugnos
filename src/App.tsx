@@ -9,6 +9,7 @@ import { Pubblicazioni } from './pages/Pubblicazioni'
 import { Eventi } from './pages/Eventi'
 import { EventoDetail } from './pages/EventoDetail'
 import { Contatti } from './pages/Contatti'
+import { NonTrovata } from './pages/NonTrovata'
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
@@ -33,6 +34,7 @@ function App() {
       <Route path="/eventi" element={<Eventi />} />
       <Route path="/eventi/:id" element={<EventoDetail />} />
       <Route path="/contatti" element={<Contatti />} />
+      <Route path="*" element={<NonTrovata />} />
       </Routes>
     </>
   )
