@@ -323,17 +323,18 @@ export function Pubblicazioni() {
               )}
             </div>
 
-            <motion.ul className="pub-list" layout>
-              <AnimatePresence mode="popLayout">
+            {/* Niente animazioni `layout`: insieme ad AnimatePresence impediscono il
+                rimontaggio delle voci che rientrano dopo un filtro. */}
+            <ul className="pub-list">
+              <AnimatePresence>
                 {filtered.map((pub, i) => (
                   <motion.li
                     key={pub.id}
                     className="pub-item"
-                    layout
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.2 } }}
-                    transition={{ duration: 0.5, delay: Math.min(i, 6) * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                    exit={{ opacity: 0, transition: { duration: 0.18 } }}
+                    transition={{ duration: 0.45, delay: Math.min(i, 6) * 0.05, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <div className="pub-year-col">
                       <span className="pub-year">{pub.year}</span>
@@ -375,7 +376,7 @@ export function Pubblicazioni() {
                   </motion.li>
                 ))}
               </AnimatePresence>
-            </motion.ul>
+            </ul>
 
             {filtered.length === 0 && (
               <div className="empty-state">

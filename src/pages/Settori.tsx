@@ -14,20 +14,16 @@ const SECTORS = [
     label: 'Ingegneria Strutturale',
     short: 'Strutturale',
     subtitle: 'Calcolo & Verifica',
-    description: `Progettazione, verifica, diagnosi e consolidamento di strutture civili e industriali, con attenzione a sicurezza, durabilità e prestazioni sismiche.`,
+    description: `Progettiamo, verifichiamo e consolidiamo strutture civili, industriali e strategiche, con particolare attenzione alla sicurezza, alla durabilità e alla sicurezza sismica delle opere.\n\nL'attività integra analisi normativa, modellazione FEM, diagnostica strutturale e conoscenza dei materiali, per definire soluzioni affidabili sia per nuove costruzioni sia per interventi su strutture esistenti.`,
     features: [
       'Progettazione di strutture civili e industriali',
-      'Verifica di sicurezza e diagnosi strutturale',
+      'Verifiche di sicurezza e vulnerabilità sismica',
+      'Diagnostica strutturale e interpretazione dei dissesti',
       'Consolidamento e rinforzo di opere esistenti',
-      'Analisi sismica secondo Eurocodici',
-      'Modellazione FEM 3D ad alta densità',
+      'Modellazione FEM e analisi del comportamento strutturale',
     ],
-    kpi: [
-      { value: '250+', label: 'Progetti strutturali' },
-      { value: '80+', label: 'Edifici verificati' },
-      { value: '25', label: 'anni di esperienza' },
-    ],
-    image: 'https://loremflickr.com/1600/1000/skyscraper,structure?lock=1001',
+    keywords: ['Progettazione', 'Verifica', 'Consolidamento'],
+    image: '/images/settori/strutturale.jpg',
     icon: <Building2 size={36} strokeWidth={1.5} />,
   },
   {
@@ -35,83 +31,67 @@ const SECTORS = [
     label: 'Ingegneria Infrastrutturale',
     short: 'Infrastrutturale',
     subtitle: 'Reti & Mobilità',
-    description: `Progettazione di nuove infrastrutture e consulenza e supporto tecnico diagnostico per interventi su opere esistenti, orientati a funzionalità, sicurezza e sostenibilità.`,
+    description: `Supportiamo enti pubblici e grandi imprese nella progettazione, verifica e riqualificazione di opere infrastrutturali nuove ed esistenti.\n\nLavoriamo su ponti, viadotti, gallerie, strade e opere d'arte, integrando consulenza tecnica, diagnostica, modellazione numerica e supporto alla progettazione degli interventi, con un approccio orientato a funzionalità, sicurezza e continuità di esercizio.`,
     features: [
       'Progettazione di nuove infrastrutture',
-      'Consulenza tecnica e diagnostica',
-      'Interventi su opere esistenti',
-      'Verifiche di funzionalità e sicurezza',
-      'Approccio orientato alla sostenibilità',
+      "Verifica e diagnosi di ponti, viadotti, gallerie e opere d'arte",
+      'Supporto tecnico per interventi su opere esistenti',
+      'Analisi strutturali e modellazione FEM infrastrutturale',
+      'Strategie di riqualificazione, manutenzione e sicurezza',
     ],
-    kpi: [
-      { value: '4.540', label: 'km di tracciato' },
-      { value: '350+', label: "opere d'arte" },
-      { value: '30+', label: 'adeguamenti sismici' },
-    ],
-    image: 'https://loremflickr.com/1600/1000/highway,bridge?lock=1003',
+    keywords: ['Ponti e viadotti', 'Gallerie', "Opere d'arte"],
+    image: '/images/settori/infrastrutturale.jpg',
     icon: <Construction size={36} strokeWidth={1.5} />,
   },
   {
     id: 'geotecnica',
     label: 'Ingegneria Geotecnica',
     short: 'Geotecnica',
-    subtitle: 'Suolo & Fondazioni',
-    description: `Analisi del complesso geotecnico e dei cedimenti fondazionali e progettazione di fondazioni, fronti di scavo, opere di sostegno e interventi per la stabilità dei versanti.`,
+    subtitle: 'Fondazioni & Opere di Sostegno',
+    description: `Analizziamo il comportamento del terreno e l'interazione terreno-struttura, con particolare attenzione ai cedimenti fondazionali, alla stabilità dei versanti e alla sicurezza delle opere di sostegno.\n\nL'attività geotecnica accompagna il processo progettuale dalla caratterizzazione del sottosuolo alla definizione degli interventi, integrando dati geologici, parametri geotecnici, modellazione e verifiche secondo normativa.`,
     features: [
       'Analisi del complesso geotecnico',
-      'Diagnosi dei cedimenti fondazionali',
-      'Progettazione di fondazioni profonde',
-      'Fronti di scavo e opere di sostegno',
-      'Stabilizzazione dei versanti',
+      'Studio dei cedimenti fondazionali',
+      'Progettazione di fondazioni superficiali e profonde',
+      'Fronti di scavo, paratie e opere di sostegno',
+      'Interventi per la stabilità dei versanti',
     ],
-    kpi: [
-      { value: '180+', label: 'Fondazioni progettate' },
-      { value: '95+', label: 'Versanti stabilizzati' },
-      { value: '24', label: 'anni di geotecnica' },
-    ],
-    image: 'https://loremflickr.com/1600/1000/excavation,foundation?lock=1007',
+    keywords: ['Opere di sostegno', 'Fondazioni', 'Stabilità'],
+    image: '/images/settori/geotecnica.jpg',
     icon: <Mountain size={36} strokeWidth={1.5} />,
   },
   {
     id: 'forense',
     label: 'Ingegneria Forense',
     short: 'Forense',
-    subtitle: 'Diagnosi & Perizia',
-    description: `Consulenze tecniche e accertamenti su danni, dissesti e contenziosi, con valutazioni documentate e indipendenti.`,
+    subtitle: 'Diagnostica Strutturale',
+    description: `Svolgiamo consulenze tecniche e accertamenti specialistici su danni, dissesti, degradi, contenziosi e problematiche strutturali, con valutazioni documentate, indipendenti e tecnicamente verificabili.\n\nL'approccio forense integra rilievo, analisi dei materiali, diagnostica, modellazione e ricostruzione tecnica dei fenomeni, fornendo supporto a privati, imprese, enti e nei procedimenti giudiziari.`,
     features: [
       "Consulenze tecniche di parte e d'ufficio",
-      'Accertamenti su danni e dissesti',
-      'Analisi forense per contenziosi',
+      'Accertamenti su danni, dissesti e degradi',
+      'Analisi tecnica per contenziosi',
+      'Ricostruzione delle cause dei fenomeni strutturali',
       'Valutazioni documentate e indipendenti',
-      'Ricostruzione di cinematismi di collasso',
     ],
-    kpi: [
-      { value: '120+', label: 'Perizie tecniche' },
-      { value: '45+', label: 'Procedimenti seguiti' },
-      { value: '15', label: 'anni di consulenza' },
-    ],
-    image: 'https://loremflickr.com/1600/1000/crack,wall?lock=1005',
+    keywords: ['Diagnosi', 'Perizia', 'Supporto tecnico-giuridico'],
+    image: '/images/settori/forense.jpg',
     icon: <ScanSearch size={36} strokeWidth={1.5} />,
   },
   {
     id: 'monitoraggio',
     label: 'Monitoraggio Strutturale',
     short: 'Monitoraggio',
-    subtitle: 'Sensori & Prevenzione',
-    description: `Progettiamo sistemi di monitoraggio statico e dinamico per edifici e infrastrutture, finalizzati al controllo nel tempo del comportamento strutturale, alla valutazione delle condizioni di sicurezza e al supporto delle attività di manutenzione, gestione e prevenzione.`,
+    subtitle: 'Statica & Dinamica',
+    description: `Progettiamo sistemi di monitoraggio statico e dinamico per edifici, ponti, viadotti e infrastrutture, finalizzati al controllo nel tempo del comportamento strutturale e alla valutazione delle condizioni di sicurezza.\n\nIl monitoraggio consente di trasformare i dati acquisiti in informazioni utili per la diagnosi, la manutenzione, la gestione dell'opera e la prevenzione dei rischi, curando la progettazione dell'architettura, l'assistenza in cantiere, l'analisi dei dati acquisiti e la formulazione del giudizio finale.`,
     features: [
-      'Monitoraggio statico e dinamico in continuo',
-      'Sistemi IoT e fibre ottiche distribuite',
-      'Algoritmi di anomaly detection con AI',
-      'Manutenzione predittiva',
-      'Supporto a gestione e prevenzione',
+      'Sistemi di monitoraggio statico e dinamico',
+      'Progettazione architettonica del sistema',
+      "Assistenza all'installazione e alla manutenzione",
+      'Analisi e interpretazione dei dati acquisiti',
+      'Diagnosi e giudizio sul comportamento strutturale',
     ],
-    kpi: [
-      { value: '60+', label: 'Sistemi installati' },
-      { value: '4.800', label: 'Sensori operativi' },
-      { value: '12', label: 'Opere strategiche' },
-    ],
-    image: 'https://loremflickr.com/1600/1000/iot?lock=1009',
+    keywords: ['Architettura', 'Analisi dati', 'Diagnosi'],
+    image: '/images/settori/monitoraggio.jpg',
     icon: <Activity size={36} strokeWidth={1.5} />,
   },
 ]
@@ -197,8 +177,8 @@ export function Settori() {
         )
       })
 
-      // KPI stagger
-      gsap.utils.toArray<HTMLElement>('.kpi-item').forEach(item => {
+      // Keyword stagger
+      gsap.utils.toArray<HTMLElement>('.keyword-item').forEach(item => {
         gsap.fromTo(item,
           { opacity: 0, y: 30 },
           {
@@ -304,11 +284,12 @@ export function Settori() {
               transition={{ duration: 1 }}
               style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}
             >
-              <h3 className="section-tag">Eccellenza Operativa</h3>
+              <h3 className="section-tag">Ambiti di Specializzazione</h3>
               <h1 className="hero-main-title">I Nostri <span className="text-gradient">Settori</span></h1>
               <p className="hero-subtitle">
-                Tre ambiti di specializzazione d'eccellenza, sviluppati in venticinque anni di ricerca
-                applicata alle infrastrutture più complesse d'Europa.
+                Operiamo nei settori strutturale e infrastrutturale integrando analisi, diagnostica,
+                modellazione FEM, prove sperimentali e monitoraggio, per garantire sicurezza,
+                continuità prestazionale e durabilità.
               </p>
             </motion.div>
           </div>
@@ -337,7 +318,9 @@ export function Settori() {
               <h2 className="section-title">
                 <WordReveal text={sector.label} />
               </h2>
-              <p className="body-text reveal">{sector.description}</p>
+              {sector.description.split('\n\n').map((para, pi) => (
+                <p key={pi} className="body-text reveal">{para}</p>
+              ))}
               <ul className="feature-list">
                 {sector.features.map((f, fi) => (
                   <li key={fi} className="feature-item">
@@ -346,12 +329,9 @@ export function Settori() {
                   </li>
                 ))}
               </ul>
-              <div className="kpi-row">
-                {sector.kpi.map((k, ki) => (
-                  <div key={ki} className="kpi-item">
-                    <span className="kpi-value text-gradient">{k.value}</span>
-                    <span className="kpi-label">{k.label}</span>
-                  </div>
+              <div className="keyword-row">
+                {sector.keywords.map((k, ki) => (
+                  <span key={ki} className="keyword-item">{k}</span>
                 ))}
               </div>
             </div>
@@ -383,12 +363,12 @@ export function Settori() {
             </div>
             <div className="stats-grid">
               {[
-                { value: '25', label: 'Anni di attività' },
-                { value: '450+', label: 'Progetti completati' },
-                { value: '80+', label: 'Pubblicazioni scientifiche' },
-                { value: '12', label: 'Partner accademici' },
-                { value: '15+', label: 'Premi e riconoscimenti' },
-                { value: '120+', label: 'Conferenze internazionali' },
+                { value: '30+', label: 'Anni di esperienza' },
+                { value: '100+', label: 'Committenti di rilievo' },
+                { value: '200+', label: 'Progetti di rilievo completati' },
+                { value: '30+', label: 'Collaborazioni tecniche e scientifiche' },
+                { value: '20+', label: 'Partner accademici' },
+                { value: '80+', label: 'Pubblicazioni e contributi scientifici' },
               ].map((stat, i) => (
                 <motion.div
                   key={i}
@@ -499,10 +479,8 @@ export function Settori() {
         .sector-text-col { padding: 1rem 0; }
         .feature-list { list-style: none; padding: 0; margin-bottom: 2.5rem; }
         .feature-item { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem; font-size: 0.95rem; color: var(--text-primary); }
-        .kpi-row { display: flex; gap: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.07); }
-        .kpi-item { display: flex; flex-direction: column; gap: 0.3rem; }
-        .kpi-value { font-size: 2rem; font-weight: 700; font-family: var(--font-serif); }
-        .kpi-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-secondary); }
+        .keyword-row { display: flex; flex-wrap: wrap; gap: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.07); }
+        .keyword-item { font-family: var(--font-sans); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2.5px; color: var(--accent-teal); }
 
         /* STATS */
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
@@ -526,7 +504,7 @@ export function Settori() {
         @media (max-width: 968px) {
           .sector-grid, .stats-grid, .grid-footer { grid-template-columns: 1fr; gap: 2.5rem; }
           .progress-sidebar { display: none; }
-          .kpi-row { flex-wrap: wrap; gap: 1.5rem; }
+          .keyword-row { gap: 1.5rem; }
           .sector-img-frame { height: 380px; }
         }
       `}</style>

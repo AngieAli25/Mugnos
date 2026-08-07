@@ -214,7 +214,15 @@ export function ProgettoDetail() {
                 <dl className="sidebar-meta">
                   <div>
                     <dt>Categoria</dt>
-                    <dd>{project.category}</dd>
+                    <dd>
+                      {project.secondaryCategory
+                        ? `${project.category} · ${project.secondaryCategory}`
+                        : project.category}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Tipologia</dt>
+                    <dd>{project.typology}</dd>
                   </div>
                   <div>
                     <dt>Anno</dt>

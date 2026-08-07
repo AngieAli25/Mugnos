@@ -21,7 +21,12 @@ import { PROJECTS } from '../data/projects'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const FEATURED_PROJECT_IDS = ['viadotto-cannavino', 'stadio-olimpico', 'cinque-terre']
+// Un progetto per ambito: infrastrutturale, strutturale, monitoraggio.
+const FEATURED_PROJECT_IDS = [
+  'viadotto-fiumara-di-catona',
+  'ex-convento-ex-chiesa-cosenza',
+  'galleria-chighizzu',
+]
 
 function Counter({ value, label }: { value: string, label: string }) {
   const countRef = useRef<HTMLSpanElement>(null)

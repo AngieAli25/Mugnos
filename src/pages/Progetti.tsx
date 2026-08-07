@@ -335,17 +335,19 @@ export function Progetti() {
               )}
             </div>
 
-            <motion.div className="projects-grid" layout>
-              <AnimatePresence mode="popLayout">
+            {/* Niente animazioni `layout`: insieme ad AnimatePresence impediscono il
+                rimontaggio delle card che rientrano dopo un filtro, e la loro
+                transizione predefinita e' una molla. */}
+            <div className="projects-grid">
+              <AnimatePresence>
                 {filteredProjects.map((project, i) => (
                   <motion.article
                     key={project.id}
                     className="project-card"
-                    layout
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
-                    transition={{ duration: 0.5, delay: Math.min(i, 6) * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                    exit={{ opacity: 0, transition: { duration: 0.18 } }}
+                    transition={{ duration: 0.45, delay: Math.min(i, 6) * 0.05, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <Link to={`/progetti/${project.id}`} className="project-card-link">
                       <div className="project-image-wrap">
@@ -369,7 +371,7 @@ export function Progetti() {
                   </motion.article>
                 ))}
               </AnimatePresence>
-            </motion.div>
+            </div>
 
             {filteredProjects.length === 0 && (
               <div className="empty-state">

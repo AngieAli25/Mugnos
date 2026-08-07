@@ -318,17 +318,18 @@ export function Eventi() {
               )}
             </div>
 
-            <motion.div className="events-grid" layout>
-              <AnimatePresence mode="popLayout">
+            {/* Niente animazioni `layout`: insieme ad AnimatePresence impediscono il
+                rimontaggio delle card che rientrano dopo un filtro. */}
+            <div className="events-grid">
+              <AnimatePresence>
                 {filtered.map((event, i) => (
                   <motion.article
                     key={event.id}
                     className="event-card"
-                    layout
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
-                    transition={{ duration: 0.5, delay: Math.min(i, 6) * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                    exit={{ opacity: 0, transition: { duration: 0.18 } }}
+                    transition={{ duration: 0.45, delay: Math.min(i, 6) * 0.05, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <Link to={`/eventi/${event.id}`} className="event-card-link">
                       <div className="event-image-wrap">
@@ -355,7 +356,7 @@ export function Eventi() {
                   </motion.article>
                 ))}
               </AnimatePresence>
-            </motion.div>
+            </div>
 
             {filtered.length === 0 && (
               <div className="empty-state">
