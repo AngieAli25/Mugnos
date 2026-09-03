@@ -11,6 +11,7 @@ export type ProjectCategory =
 export type ProjectTypology =
   | 'Cavalcavia'
   | 'Diga'
+  | 'Edificio industriale'
   | 'Edificio monumentale'
   | 'Edificio pubblico'
   | 'Edificio residenziale'
@@ -3290,6 +3291,72 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    id: 'ponte-corleone',
+    title: 'Ponte Corleone',
+    description: 'L’intervento ha riguardato il Ponte Corleone di Palermo, infrastruttura in calcestruzzo armato costituita da due ponti ad arco a via superiore, indipendenti e affiancati.',
+    category: 'Monitoraggio Strutturale',
+    typology: 'Ponte',
+    year: 2025,
+    location: 'Palermo',
+    client: 'Anas S.p.A.',
+    services: 'Progetto del sistema di monitoraggio, analisi del comportamento dinamico con approccio combinato numerico e sperimentale e taratura del sistema.',
+    readTime: 2,
+    cover: '/images/progetti/ponte-corleone/cover.jpg',
+    gallery: [
+      '/images/progetti/ponte-corleone/cover.jpg',
+      '/images/progetti/ponte-corleone/01.jpg',
+      '/images/progetti/ponte-corleone/02.jpg',
+      '/images/progetti/ponte-corleone/03.jpg',
+      '/images/progetti/ponte-corleone/04.jpg',
+      '/images/progetti/ponte-corleone/05.jpg',
+    ],
+    scope: [
+      'Progetto del sistema di monitoraggio dinamico',
+      'Caratterizzazione dinamica sperimentale OMA',
+      'Modellazione FEM e validazione numerico-sperimentale',
+      'Taratura del sistema di monitoraggio e correzione dei dati',
+    ],
+    article: [
+      {
+        type: 'paragraph',
+        text: 'L’intervento ha riguardato il Ponte Corleone di Palermo, infrastruttura in calcestruzzo armato costituita da due ponti ad arco a via superiore, indipendenti e affiancati.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Lo Studio ha sviluppato il progetto del sistema di monitoraggio dinamico, nell’ambito degli interventi strutturali previsti sugli appoggi e sulle selle Gerber, con l’obiettivo di controllare il comportamento dell’opera durante e dopo le lavorazioni.',
+      },
+      {
+        type: 'paragraph',
+        text: 'L’attività ha previsto una caratterizzazione dinamica sperimentale del viadotto mediante tecniche OMA in condizioni ambientali, con acquisizione accelerometrica e successiva identificazione dei principali parametri modali. La prova è stata condotta con 18 accelerometri verticali, frequenza di campionamento pari a 100 Hz e durata di acquisizione di 60 minuti.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Parallelamente è stato sviluppato un modello numerico FEM dell’infrastruttura, calibrato e validato sui dati sperimentali raccolti. Il confronto tra forme modali numeriche e sperimentali ha consentito di verificare la coerenza del modello e di definire una base tecnica affidabile per l’interpretazione dei dati di monitoraggio.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Una parte specifica dell’attività ha riguardato la taratura del sistema di monitoraggio dinamico, attraverso il confronto tra sensori tradizionali e sensori wireless e lo studio di funzioni di correzione dei risultati. Tale approccio consente di rendere i dati acquisiti dal sistema permanente più affidabili e confrontabili con quelli ottenuti mediante prove dinamiche classiche.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Nel complesso, il lavoro ha consentito di impostare un sistema di monitoraggio evoluto, basato sull’integrazione tra prova sperimentale, modellazione numerica e calibrazione dei dati, fornendo uno strumento operativo per il controllo nel tempo del comportamento dinamico del ponte e per il supporto alle decisioni tecniche durante le fasi di intervento.',
+      },
+      {
+        type: 'heading',
+        text: 'Servizi erogati',
+      },
+      {
+        type: 'list',
+        items: [
+          'Progetto del sistema di monitoraggio dinamico',
+          'Caratterizzazione dinamica sperimentale OMA',
+          'Modellazione FEM e validazione numerico-sperimentale',
+          'Taratura del sistema di monitoraggio e correzione dei dati',
+        ],
+      },
+    ],
+  },
+  {
     id: 'ponte-di-fisciano',
     title: 'Ponte di Fisciano',
     description: 'L’intervento ha riguardato il progetto esecutivo degli interventi di risanamento del Ponte di Fisciano, nell’ambito dell’Accordo Quadro della Provincia di Salerno per la verifica accurata e il recupero di ponti esistenti.',
@@ -4182,6 +4249,200 @@ export const PROJECTS: Project[] = [
           'Progettazione esecutiva degli interventi di consolidamento',
           'Monitoraggio statico in opera',
           'Direzione lavori strutturale',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'ultragas-spa-capannone',
+    title: 'Capannone Imbottigliamento Ultragas',
+    description: 'L’intervento ha riguardato il Capannone di Imbottigliamento dello stabilimento Ultragas di Catania, struttura industriale in calcestruzzo armato con copertura in travi prefabbricate in c.a.p., destinata alle attività di riempimento e movimentazione di bombole GPL.',
+    category: 'Ingegneria Strutturale',
+    typology: 'Edificio industriale',
+    year: 2021,
+    location: 'Zona Industriale, Catania',
+    client: 'Ultragas S.p.A.',
+    services: 'Progetto esecutivo degli interventi di adeguamento sismico del Capannone Imbottigliamento dello Stabilimento Ultragas S.p.A. – Zona Industriale di Catania.',
+    amount: '€ 190.285,95',
+    readTime: 2,
+    cover: '/images/progetti/ultragas-spa-capannone/cover.jpg',
+    gallery: [
+      '/images/progetti/ultragas-spa-capannone/cover.jpg',
+    ],
+    scope: [
+      'Verifica di vulnerabilità sismica',
+      'Progetto esecutivo di adeguamento sismico',
+      'Modellazione FEM e verifiche secondo NTC 2018',
+    ],
+    article: [
+      {
+        type: 'paragraph',
+        text: 'L’intervento ha riguardato il Capannone di Imbottigliamento dello stabilimento Ultragas di Catania, struttura industriale in calcestruzzo armato con copertura in travi prefabbricate in c.a.p., destinata alle attività di riempimento e movimentazione di bombole GPL.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Lo Studio ha svolto la verifica di vulnerabilità sismica e il successivo progetto esecutivo degli interventi di adeguamento sismico, secondo NTC 2018, nell’ambito della valutazione della sicurezza di uno stabilimento industriale classificato in classe d’uso IV.',
+      },
+      {
+        type: 'paragraph',
+        text: 'L’analisi dello stato di fatto, basata sul quadro conoscitivo disponibile, sulle indagini pregresse e sulla modellazione FEM, ha evidenziato la necessità di intervenire sul comportamento sismico globale del capannone.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Il progetto ha previsto l’inserimento di controventi metallici a croce di Sant’Andrea, dissipatori isteretici assiali tipo BRAD, shock transmitter per il collegamento dei corpi strutturali e delle travi prefabbricate, oltre a interventi locali di integrazione delle armature, trattamento passivante e ripristino corticale degli elementi in calcestruzzo armato.',
+      },
+      {
+        type: 'paragraph',
+        text: 'La progettazione ha incluso anche le opere edili funzionali all’ammodernamento della linea di imbottigliamento GPL, con adeguamento di basamenti, rialzi, riempimenti, scavi localizzati e finiture del piano di lavoro.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Nel complesso, l’attività ha consentito di trasformare la verifica di vulnerabilità in un progetto esecutivo integrato, capace di coniugare adeguamento sismico, risanamento strutturale e continuità operativa dello stabilimento industriale.',
+      },
+      {
+        type: 'heading',
+        text: 'Servizi erogati',
+      },
+      {
+        type: 'list',
+        items: [
+          'Verifica di vulnerabilità sismica',
+          'Progetto esecutivo di adeguamento sismico',
+          'Modellazione FEM e verifiche secondo NTC 2018',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'ultragas-spa-magazzini',
+    title: 'Capannoni Stabilimento Ultragas',
+    description: 'L’intervento riguarda lo stabilimento Ultragas di Catania, con riferimento ai sei magazzini interni destinati alla manutenzione e al muro di cinta adiacente, inseriti all’interno di un impianto industriale classificato in classe d’uso IV.',
+    category: 'Ingegneria Strutturale',
+    typology: 'Edificio industriale',
+    year: 2024,
+    location: 'Zona Industriale, Catania',
+    client: 'Ultragas S.p.A.',
+    services: 'Progetto esecutivo degli interventi di demolizione e ricostruzione di sei capannoni interni allo Stabilimento Ultragas S.p.A. – Zona Industriale di Catania.',
+    duration: '2024 – in corso',
+    amount: '€ 663.677,07',
+    readTime: 2,
+    cover: '/images/progetti/ultragas-spa-magazzini/cover.jpg',
+    gallery: [
+      '/images/progetti/ultragas-spa-magazzini/cover.jpg',
+      '/images/progetti/ultragas-spa-magazzini/01.jpg',
+      '/images/progetti/ultragas-spa-magazzini/02.jpg',
+      '/images/progetti/ultragas-spa-magazzini/03.jpg',
+      '/images/progetti/ultragas-spa-magazzini/04.jpg',
+      '/images/progetti/ultragas-spa-magazzini/05.jpg',
+      '/images/progetti/ultragas-spa-magazzini/06.jpg',
+      '/images/progetti/ultragas-spa-magazzini/07.jpg',
+    ],
+    scope: [
+      'Progetto esecutivo strutturale',
+      'Demolizione e ricostruzione secondo NTC 2018',
+      'Riqualificazione strutture industriali',
+    ],
+    article: [
+      {
+        type: 'paragraph',
+        text: 'L’intervento riguarda lo stabilimento Ultragas di Catania, con riferimento ai sei magazzini interni destinati alla manutenzione e al muro di cinta adiacente, inseriti all’interno di un impianto industriale classificato in classe d’uso IV.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Lo Studio ha sviluppato il progetto esecutivo strutturale degli interventi di demolizione e ricostruzione, secondo NTC 2018, con l’obiettivo di adeguare le strutture alle prestazioni richieste dalla normativa vigente, mantenendo inalterate le geometrie e i volumi rispetto allo stato di fatto.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Il progetto prevede la demolizione dei magazzini esistenti, caratterizzati da strutture portanti in carpenteria metallica, copertura a doppia falda e lastre ondulate in amianto, con successiva ricostruzione mediante nuove strutture in acciaio. I nuovi capannoni sono stati progettati con colonne in profili HEA, capriate reticolari, travi di bordo, controventi e nuove fondazioni in calcestruzzo armato.',
+      },
+      {
+        type: 'paragraph',
+        text: 'L’intervento comprende anche la ricostruzione del muro di cinta, previsto con telaio in calcestruzzo armato e tamponamento in muratura. Per le porzioni ordinarie sono state adottate fondazioni dirette, mentre per il tratto più critico, interessato da fenomeni erosivi al piede dovuti alla presenza di un corso d’acqua adiacente, è stata prevista una fondazione profonda su pali.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Nel complesso, l’attività ha consentito di definire un progetto esecutivo integrato, capace di coniugare sicurezza strutturale, adeguamento normativo, funzionalità industriale e gestione delle criticità locali del sito, nell’ambito della riqualificazione dello stabilimento Ultragas di Catania.',
+      },
+      {
+        type: 'heading',
+        text: 'Servizi erogati',
+      },
+      {
+        type: 'list',
+        items: [
+          'Progetto esecutivo strutturale',
+          'Demolizione e ricostruzione secondo NTC 2018',
+          'Riqualificazione strutture industriali',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'ultragas-spa-palazzina',
+    title: 'Palazzina Uffici Ultragas',
+    description: 'L’intervento ha riguardato la Palazzina Uffici dello stabilimento Ultragas di Catania, edificio strategico interno a un impianto industriale classificato in classe d’uso IV.',
+    category: 'Ingegneria Strutturale',
+    typology: 'Edificio industriale',
+    year: 2025,
+    location: 'Zona Industriale, Catania',
+    client: 'Ultragas S.p.A.',
+    services: 'Verifica di vulnerabilità sismica e Progetto esecutivo degli interventi di adeguamento sismico della palazzina uffici all’interno dello Stabilimento Ultragas S.p.A. – Zona Industriale di Catania.',
+    duration: '2024 - 2025',
+    amount: '€ 412.846,04',
+    readTime: 2,
+    cover: '/images/progetti/ultragas-spa-palazzina/cover.jpg',
+    gallery: [
+      '/images/progetti/ultragas-spa-palazzina/cover.jpg',
+      '/images/progetti/ultragas-spa-palazzina/01.jpg',
+      '/images/progetti/ultragas-spa-palazzina/02.jpg',
+      '/images/progetti/ultragas-spa-palazzina/03.jpg',
+      '/images/progetti/ultragas-spa-palazzina/04.jpg',
+      '/images/progetti/ultragas-spa-palazzina/05.jpg',
+      '/images/progetti/ultragas-spa-palazzina/06.jpg',
+      '/images/progetti/ultragas-spa-palazzina/07.jpg',
+      '/images/progetti/ultragas-spa-palazzina/08.jpg',
+      '/images/progetti/ultragas-spa-palazzina/09.jpg',
+    ],
+    scope: [
+      'Verifica di vulnerabilità sismica',
+      'Progetto esecutivo di adeguamento sismico',
+      'Modellazione FEM e verifiche secondo NTC 2018',
+    ],
+    article: [
+      {
+        type: 'paragraph',
+        text: 'L’intervento ha riguardato la Palazzina Uffici dello stabilimento Ultragas di Catania, edificio strategico interno a un impianto industriale classificato in classe d’uso IV.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Lo Studio ha svolto la verifica di vulnerabilità sismica e il successivo progetto esecutivo degli interventi di adeguamento sismico, secondo NTC 2018.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Le scelte progettuali sono state orientate alla necessità di migliorare la risposta sismica dell’edificio limitando l’interferenza con le attività operative interne. Per questo motivo è stata adottata una soluzione prevalentemente esterna, basata sull’affiancamento alla struttura esistente di torri in carpenteria metallica ad elevata rigidezza e capacità dissipativa, fondate su micropali.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Il sistema di adeguamento prevede il trasferimento delle azioni sismiche dalla muratura alle nuove strutture metalliche mediante collegamenti dedicati, pendoli in carpenteria, piastre di contatto e tasselli chimici. La disposizione delle pareti controventate è stata studiata per intercettare i principali punti di intersezione tra le murature e migliorare il comportamento globale dell’organismo strutturale.',
+      },
+      {
+        type: 'paragraph',
+        text: 'In corrispondenza dei lati non direttamente utilizzabili per vincoli geometrici e funzionali, il progetto ha previsto anche un sistema di rinvio delle azioni mediante cavi di precompressione, con fondazioni profonde dimensionate per resistere sia ad azioni di compressione sia ad azioni di trazione.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Nel complesso, l’attività ha consentito di trasformare la valutazione di vulnerabilità in un progetto esecutivo di adeguamento sismico integrato, capace di incrementare la sicurezza della palazzina uffici e di garantire la compatibilità degli interventi con le esigenze operative di uno stabilimento industriale in esercizio.',
+      },
+      {
+        type: 'heading',
+        text: 'Servizi erogati',
+      },
+      {
+        type: 'list',
+        items: [
+          'Verifica di vulnerabilità sismica',
+          'Progetto esecutivo di adeguamento sismico',
+          'Modellazione FEM e verifiche secondo NTC 2018',
         ],
       },
     ],
