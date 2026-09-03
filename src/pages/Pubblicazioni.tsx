@@ -79,7 +79,7 @@ export function Pubblicazioni() {
       if (filters.venue && p.venue !== filters.venue) return false
       if (filters.author && !p.authors.includes(filters.author)) return false
       if (q) {
-        const hay = `${p.title} ${p.authors.join(' ')} ${p.venue} ${p.abstract} ${p.tags.join(' ')}`.toLowerCase()
+        const hay = `${p.title} ${p.authors.join(' ')} ${p.venue} ${p.tags.join(' ')}`.toLowerCase()
         if (!hay.includes(q)) return false
       }
       return true
@@ -343,8 +343,12 @@ export function Pubblicazioni() {
                     <div className="pub-body">
                       <h3 className="pub-title">{pub.title}</h3>
                       <p className="pub-meta">
-                        <span className="pub-authors">{pub.authors.join(', ')}</span>
-                        <span className="pub-dot">·</span>
+                        {pub.authors.length > 0 && (
+                          <>
+                            <span className="pub-authors">{pub.authors.join(', ')}</span>
+                            <span className="pub-dot">·</span>
+                          </>
+                        )}
                         <span className="pub-venue">{pub.venue}</span>
                       </p>
                     </div>
