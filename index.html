@@ -2,9 +2,16 @@
 <html lang="it">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/loghi/logoscuro.png" />
-    <link rel="shortcut icon" type="image/png" href="/loghi/logoscuro.png" />
-    <link rel="apple-touch-icon" href="/loghi/logoscuro.png" />
+    <!-- Icone: generate dal monogramma del marchio (rigenerabili con scripts/genera-icone.py).
+         Il file .ico porta ?v=2 perche' il precedente, non referenziato, restava
+         nella cache dei browser che lo cercano da soli su /favicon.ico. -->
+    <link rel="icon" href="/favicon.ico?v=2" sizes="32x32" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="L&M Ingegneria — Eccellenza nella progettazione strutturale, infrastrutturale e geotecnica. Studio fondato a Canicattì (AG)." />
     <meta name="theme-color" content="#0a0a0a" />
