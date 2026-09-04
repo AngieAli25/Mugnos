@@ -347,35 +347,35 @@ export function Home() {
                   title: 'Ingegneria Strutturale',
                   icon: <Building2 size={24} strokeWidth={1.5} />,
                   desc: 'Progettazione, verifica, diagnosi e consolidamento di strutture civili e industriali, con attenzione a sicurezza, durabilità e prestazioni sismiche.',
-                  img: 'https://loremflickr.com/1600/1000/skyscraper,structure?lock=1001',
+                  img: '/images/settori/strutturale.jpg',
                 },
                 {
                   id: 'infrastrutturale',
                   title: 'Ingegneria Infrastrutturale',
                   icon: <Construction size={24} strokeWidth={1.5} />,
                   desc: 'Progettazione di nuove infrastrutture e consulenza diagnostica per interventi su opere esistenti, orientati a funzionalità, sicurezza e sostenibilità.',
-                  img: 'https://loremflickr.com/1600/1000/highway,bridge?lock=1003',
+                  img: '/images/settori/infrastrutturale.jpg',
                 },
                 {
                   id: 'geotecnica',
                   title: 'Ingegneria Geotecnica',
                   icon: <Mountain size={24} strokeWidth={1.5} />,
                   desc: 'Analisi del complesso geotecnico, cedimenti fondazionali, progettazione di fondazioni, fronti di scavo e stabilizzazione dei versanti.',
-                  img: 'https://loremflickr.com/1600/1000/excavation,foundation?lock=1007',
+                  img: '/images/settori/geotecnica.jpg',
                 },
                 {
                   id: 'forense',
                   title: 'Ingegneria Forense',
                   icon: <ScanSearch size={24} strokeWidth={1.5} />,
                   desc: 'Consulenze tecniche e accertamenti su danni, dissesti e contenziosi, con valutazioni documentate e indipendenti.',
-                  img: 'https://loremflickr.com/1600/1000/crack,wall?lock=1005',
+                  img: '/images/settori/forense.jpg',
                 },
                 {
                   id: 'monitoraggio',
                   title: 'Monitoraggio Strutturale',
                   icon: <Activity size={24} strokeWidth={1.5} />,
                   desc: 'Sistemi di monitoraggio statico e dinamico per edifici e infrastrutture, a supporto di manutenzione, gestione e prevenzione.',
-                  img: 'https://loremflickr.com/1600/1000/iot?lock=1009',
+                  img: '/images/settori/monitoraggio.jpg',
                 },
               ].map((sector, index) => (
                 <div key={index} className="sector-card glass-card reveal" onMouseMove={handle3DMove} onMouseLeave={handle3DLeave}>
@@ -567,16 +567,9 @@ export function Home() {
               <h4 className="footer-title">Contatti</h4>
               <ul className="footer-contact-list">
                 <li><MapPin size={18} /> Contrada Andolina, Canicattì (AG)</li>
-                <li><Phone size={18} /> Elio Lo Giudice — +39 334 176 5539</li>
-                <li><Phone size={18} /> Giuseppe Mugnos — +39 328 162 3648</li>
+                <li><Phone size={18} /> Elio Lo Giudice — <span className="footer-nowrap">+39 334 176 5539</span></li>
+                <li><Phone size={18} /> Giuseppe Mugnos — <span className="footer-nowrap">+39 328 162 3648</span></li>
               </ul>
-            </div>
-            <div className="reveal">
-              <h4 className="footer-title">Seguici</h4>
-              <div className="social-links">
-                <a href="#">LinkedIn</a>
-                <a href="#">Twitter</a>
-              </div>
             </div>
           </div>
           <div className="container footer-bottom">
@@ -698,7 +691,7 @@ export function Home() {
         }
         .grid-footer {
           display: grid;
-          grid-template-columns: 2fr 1fr 1fr;
+          grid-template-columns: 2fr auto;
           gap: 4rem;
           padding-bottom: 4rem;
         }
@@ -746,7 +739,10 @@ export function Home() {
           scroll-behavior: smooth;
           scrollbar-width: none;
           -ms-overflow-style: none;
-          padding: 0.5rem 0.25rem 1.5rem;
+          /* Il contenitore scorre in orizzontale, quindi ritaglia anche in
+             verticale: serve spazio sopra e sotto o l'inclinazione 3D della
+             card sotto il mouse (e l'overshoot della sua entrata) viene tagliata. */
+          padding: 2rem 0.25rem;
           margin: 0 -0.25rem;
         }
         .sectors-carousel::-webkit-scrollbar { display: none; }
@@ -861,12 +857,13 @@ export function Home() {
         .featured-header { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: end; margin-bottom: 3.5rem; }
         .featured-intro { color: var(--text-secondary); font-size: 1.05rem; line-height: 1.7; margin: 0; max-width: 520px; }
         .featured-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-        .featured-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.5s; }
-        .featured-card:hover { transform: translateY(-6px); border-color: rgba(35,172,181,0.35); }
+        .featured-card { background: rgba(255,255,255,0.02); border: 2px solid rgba(255,255,255,0.07); border-radius: 16px; overflow: hidden; transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.5s; }
+        .featured-card:hover { transform: translateY(-6px); border-color: rgba(35,172,181,0.5); }
         .featured-card-link { display: flex; flex-direction: column; height: 100%; color: inherit; text-decoration: none; }
         .featured-image-wrap { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #111; }
-        .featured-image { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.55) brightness(0.85); transition: transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.6s ease; }
-        .featured-card:hover .featured-image { transform: scale(1.06); filter: grayscale(0) brightness(1); }
+        /* Come sulla pagina Progetti: copertine senza filtro, hover di sola scala. */
+        .featured-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+        .featured-card:hover .featured-image { transform: scale(1.06); }
         .featured-year { position: absolute; top: 1rem; right: 1rem; background: rgba(10,10,10,0.85); backdrop-filter: blur(8px); color: var(--accent-teal); font-family: var(--font-serif); font-size: 0.9rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: 6px; letter-spacing: 0.5px; border: 1px solid rgba(35,172,181,0.25); }
         .featured-body { padding: 1.5rem 1.5rem 1.75rem; display: flex; flex-direction: column; gap: 0.5rem; }
         .featured-category { color: var(--accent-teal); font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
@@ -982,9 +979,6 @@ export function Home() {
           margin-bottom: 1rem;
           color: var(--text-secondary);
         }
-        .social-links { display: flex; gap: 1.5rem; }
-        .social-links a { color: var(--text-secondary); font-size: 0.9rem; }
-        .social-links a:hover { color: var(--white); }
         .footer-bottom {
           padding-top: 4rem;
           border-top: 1px solid rgba(255, 255, 255, 0.05);

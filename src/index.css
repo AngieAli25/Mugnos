@@ -178,6 +178,21 @@ img.footer-logo {
     user-select: none;
 }
 
+/* Contatti nel footer: l'icona non si comprime e il numero di telefono resta
+   sempre integro. Sopra il breakpoint la colonna contatti si dimensiona sul
+   contenuto (.grid-footer: 2fr auto), quindi ogni voce sta su una riga sola. */
+.footer-contact-list li svg {
+    flex-shrink: 0;
+}
+.footer-nowrap {
+    white-space: nowrap;
+}
+@media (min-width: 901px) {
+    .footer-contact-list li {
+        white-space: nowrap;
+    }
+}
+
 /* Scrollbar Customization */
 ::-webkit-scrollbar {
     width: 8px;
@@ -428,16 +443,10 @@ svg {
     .back-link,
     .map-open,
     .download-btn,
-    .network-toggle,
-    .social-links a,
-    .footer-links a {
+    .network-toggle {
         display: inline-flex;
         align-items: center;
         min-height: 44px;
-    }
-    .social-links a,
-    .footer-links a {
-        padding: 0.35rem 0;
     }
     .network-toggle,
     .map-open {

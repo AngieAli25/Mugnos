@@ -139,19 +139,6 @@ export function Contatti() {
     e.currentTarget.style.transition = 'transform 0.6s cubic-bezier(0.16,1,0.3,1)'
   }
 
-  const handleMagneticMoveLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const el = e.currentTarget
-    const r = el.getBoundingClientRect()
-    const x = (e.clientX - r.left - r.width / 2) * 0.35
-    const y = (e.clientY - r.top - r.height / 2) * 0.35
-    el.style.transform = `translate(${x}px, ${y}px)`
-    el.style.transition = 'transform 0.1s linear'
-  }
-  const handleMagneticLeaveLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.currentTarget.style.transform = 'translate(0,0)'
-    e.currentTarget.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)'
-  }
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setSent(true)
@@ -371,16 +358,9 @@ export function Contatti() {
               <h4 className="footer-title">Contatti</h4>
               <ul className="footer-contact-list">
                 <li><MapPin size={18} /> Contrada Andolina, Canicattì (AG)</li>
-                <li><Phone size={18} /> Elio Lo Giudice — +39 334 176 5539</li>
-                <li><Phone size={18} /> Giuseppe Mugnos — +39 328 162 3648</li>
+                <li><Phone size={18} /> Elio Lo Giudice — <span className="footer-nowrap">+39 334 176 5539</span></li>
+                <li><Phone size={18} /> Giuseppe Mugnos — <span className="footer-nowrap">+39 328 162 3648</span></li>
               </ul>
-            </div>
-            <div className="reveal">
-              <h4 className="footer-title">Seguici</h4>
-              <div className="social-links">
-                <a href="#" onMouseMove={handleMagneticMoveLink} onMouseLeave={handleMagneticLeaveLink}>LinkedIn</a>
-                <a href="#" onMouseMove={handleMagneticMoveLink} onMouseLeave={handleMagneticLeaveLink}>Twitter</a>
-              </div>
             </div>
           </div>
           <div className="container footer-bottom">
@@ -468,13 +448,10 @@ export function Contatti() {
 
         /* FOOTER */
         .footer { border-top: 1px solid rgba(255,255,255,0.05); }
-        .grid-footer { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; padding-bottom: 4rem; }
+        .grid-footer { display: grid; grid-template-columns: 2fr auto; gap: 4rem; padding-bottom: 4rem; }
         .footer-logo { font-size: 1.8rem; margin-bottom: 1.5rem; }
         .footer-title { margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; font-size: 1rem; }
         .footer-contact-list li { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; color: var(--text-secondary); }
-        .social-links { display: flex; gap: 1.5rem; }
-        .social-links a { color: var(--text-secondary); font-size: 0.9rem; will-change: transform; }
-        .social-links a:hover { color: var(--white); }
         .footer-bottom { padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: #555; font-size: 0.85rem; }
 
         @media (max-width: 968px) {

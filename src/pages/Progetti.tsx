@@ -398,16 +398,9 @@ export function Progetti() {
               <h4 className="footer-title">Contatti</h4>
               <ul className="footer-contact-list">
                 <li><MapPin size={18} /> Contrada Andolina, Canicattì (AG)</li>
-                <li><Phone size={18} /> Elio Lo Giudice — +39 334 176 5539</li>
-                <li><Phone size={18} /> Giuseppe Mugnos — +39 328 162 3648</li>
+                <li><Phone size={18} /> Elio Lo Giudice — <span className="footer-nowrap">+39 334 176 5539</span></li>
+                <li><Phone size={18} /> Giuseppe Mugnos — <span className="footer-nowrap">+39 328 162 3648</span></li>
               </ul>
-            </div>
-            <div className="reveal">
-              <h4 className="footer-title">Seguici</h4>
-              <div className="social-links">
-                <a href="#">LinkedIn</a>
-                <a href="#">Twitter</a>
-              </div>
             </div>
           </div>
           <div className="container footer-bottom">
@@ -484,12 +477,14 @@ export function Progetti() {
 
         /* PROJECTS GRID */
         .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
-        .project-card { display: flex; flex-direction: column; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.5s; }
-        .project-card:hover { transform: translateY(-6px); border-color: rgba(35,172,181,0.35); }
+        .project-card { display: flex; flex-direction: column; background: rgba(255,255,255,0.02); border: 2px solid rgba(255,255,255,0.07); border-radius: 16px; overflow: hidden; transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.5s; }
+        .project-card:hover { transform: translateY(-6px); border-color: rgba(35,172,181,0.5); }
         .project-card-link { display: flex; flex-direction: column; height: 100%; color: inherit; text-decoration: none; }
         .project-image-wrap { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #111; }
-        .project-image { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.6) brightness(0.85); transition: transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.6s ease; }
-        .project-card:hover .project-image { transform: scale(1.06); filter: grayscale(0) brightness(1); }
+        /* Nessun filtro sulle copertine: le immagini restano a piena resa
+           anche a riposo. Sull'hover resta il solo movimento di scala. */
+        .project-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+        .project-card:hover .project-image { transform: scale(1.06); }
         .project-image-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(10,10,10,0.55) 100%); pointer-events: none; }
         .project-year { position: absolute; top: 1rem; right: 1rem; background: rgba(10,10,10,0.85); backdrop-filter: blur(8px); color: var(--accent-teal); font-family: var(--font-serif); font-size: 0.95rem; font-weight: 700; padding: 0.35rem 0.75rem; border-radius: 6px; letter-spacing: 0.5px; border: 1px solid rgba(35,172,181,0.25); }
         .project-body { padding: 1.75rem; display: flex; flex-direction: column; gap: 0.85rem; flex: 1; }
@@ -515,13 +510,10 @@ export function Progetti() {
 
         /* FOOTER */
         .footer { border-top: 1px solid rgba(255,255,255,0.05); }
-        .grid-footer { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; padding-bottom: 4rem; }
+        .grid-footer { display: grid; grid-template-columns: 2fr auto; gap: 4rem; padding-bottom: 4rem; }
         .footer-logo { font-size: 1.8rem; margin-bottom: 1.5rem; }
         .footer-title { margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; font-size: 1rem; }
         .footer-contact-list li { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; color: var(--text-secondary); }
-        .social-links { display: flex; gap: 1.5rem; }
-        .social-links a { color: var(--text-secondary); font-size: 0.9rem; }
-        .social-links a:hover { color: var(--white); }
         .footer-bottom { padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: #555; font-size: 0.85rem; }
 
         @media (max-width: 1100px) {

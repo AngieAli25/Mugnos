@@ -401,16 +401,9 @@ export function Settori() {
               <h4 className="footer-title">Contatti</h4>
               <ul className="footer-contact-list">
                 <li><MapPin size={18} /> Contrada Andolina, Canicattì (AG)</li>
-                <li><Phone size={18} /> Elio Lo Giudice — +39 334 176 5539</li>
-                <li><Phone size={18} /> Giuseppe Mugnos — +39 328 162 3648</li>
+                <li><Phone size={18} /> Elio Lo Giudice — <span className="footer-nowrap">+39 334 176 5539</span></li>
+                <li><Phone size={18} /> Giuseppe Mugnos — <span className="footer-nowrap">+39 328 162 3648</span></li>
               </ul>
-            </div>
-            <div className="reveal">
-              <h4 className="footer-title">Seguici</h4>
-              <div className="social-links">
-                <a href="#">LinkedIn</a>
-                <a href="#">Twitter</a>
-              </div>
             </div>
           </div>
           <div className="container footer-bottom">
@@ -470,13 +463,10 @@ export function Settori() {
 
         /* FOOTER */
         .footer { border-top: 1px solid rgba(255,255,255,0.05); }
-        .grid-footer { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; padding-bottom: 4rem; }
+        .grid-footer { display: grid; grid-template-columns: 2fr auto; gap: 4rem; padding-bottom: 4rem; }
         .footer-logo { font-size: 1.8rem; margin-bottom: 1.5rem; }
         .footer-title { margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; font-size: 1rem; }
         .footer-contact-list li { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; color: var(--text-secondary); }
-        .social-links { display: flex; gap: 1.5rem; }
-        .social-links a { color: var(--text-secondary); font-size: 0.9rem; }
-        .social-links a:hover { color: var(--white); }
         .footer-bottom { padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: #555; font-size: 0.85rem; }
 
         @media (max-width: 968px) {
