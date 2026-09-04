@@ -666,7 +666,9 @@ export function Studio() {
         .footer-bottom { padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: #555; font-size: 0.85rem; }
 
         @media (max-width: 968px) {
-          .vision-grid, .founder-grid, .studio-stats-grid, .grid-footer, .software-container { grid-template-columns: 1fr; gap: 3rem; }
+          /* .founder-grid.reversed ha specificita' 0,2,0 e batterebbe la
+             regola a una colonna qui sotto: va azzerata esplicitamente. */
+          .vision-grid, .founder-grid, .founder-grid.reversed, .studio-stats-grid, .grid-footer, .software-container { grid-template-columns: 1fr; gap: 3rem; }
           .founder-grid.reversed .founder-text, .founder-grid.reversed .founder-img-wrap { order: unset; }
           .values-grid { grid-template-columns: 1fr; }
           .timeline-wrap { grid-template-columns: 1fr; }

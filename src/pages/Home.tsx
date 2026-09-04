@@ -1004,8 +1004,11 @@ export function Home() {
             gap: 3rem;
           }
           .d-none-mobile { display: none; }
-          .numbers-grid {
+          /* La classe nel markup e' .numbers-grid-3: la regola precedente
+             puntava a .numbers-grid, inesistente, e non collassava nulla. */
+          .numbers-grid-3 {
             grid-template-columns: 1fr;
+            gap: 2.5rem;
           }
           .sectors-carousel > .sector-card {
             flex: 0 0 calc((100% - 2rem) / 2);
@@ -1015,6 +1018,21 @@ export function Home() {
           .hero-video-container { width: 100%; }
         }
         @media (max-width: 640px) {
+          .numbers-grid-3 { gap: 2rem; }
+          .number-item {
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+          }
+          .number-value { font-size: 3.6rem; }
+          .number-suffix { font-size: 2.2rem; }
+          .number-col-2 {
+            text-align: center;
+            max-width: none;
+            padding-bottom: 0;
+            font-size: 0.85rem;
+          }
           .sectors-carousel > .sector-card {
             flex: 0 0 88%;
           }
