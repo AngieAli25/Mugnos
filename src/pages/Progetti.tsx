@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, Phone, MapPin, ArrowUpRight, ArrowDown, Search, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { PROJECTS, type ProjectCategory, type ProjectTypology } from '../data/projects'
+import { SiteNav } from '../components/SiteNav'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -161,22 +162,7 @@ export function Progetti() {
       <div ref={cursorRef} className="custom-cursor" />
       <div ref={followerRef} className="cursor-follower" />
 
-      <nav className="navbar">
-        <div className="container nav-content">
-          <div className="logo">
-            <Link to="/"><img src="/loghi/logochiaro.png" alt="L&M Ingegneria" style={{ height: '50px' }} /></Link>
-          </div>
-          <div className="nav-links">
-            <Link to="/">Home</Link>
-            <Link to="/studio">Studio</Link>
-            <Link to="/settori">Settori</Link>
-            <Link to="/progetti" className="active-link">Progetti</Link>
-            <Link to="/pubblicazioni">Pubblicazioni</Link>
-            <Link to="/eventi">Eventi</Link>
-            <Link to="/contatti">Contatti</Link>
-          </div>
-        </div>
-      </nav>
+      <SiteNav />
 
       <main>
         {/* HERO */}
@@ -432,13 +418,6 @@ export function Progetti() {
 
       <style>{`
         /* NAVBAR */
-        .navbar { height: var(--header-height); display: flex; align-items: center; position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(10,10,10,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .nav-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .nav-links { display: flex; gap: 2.5rem; font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-links a { position: relative; padding: 0.5rem 0; transition: color 0.3s ease; }
-        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--accent-teal); transform: scaleX(0); transform-origin: right; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
-        .nav-links a:hover, .nav-links a.active-link { color: var(--accent-teal); }
-        .nav-links a:hover::after, .nav-links a.active-link::after { transform: scaleX(1); transform-origin: left; }
 
         /* HERO */
         .hero { width: 100%; display: flex; align-items: center; position: relative; overflow: hidden; background: var(--bg-primary); }

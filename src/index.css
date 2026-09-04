@@ -95,6 +95,10 @@ ul {
     max-width: var(--container-max-width);
     margin: 0 auto;
     padding: 0 2rem;
+    /* Dentro un contenitore flex (es. la hero) l'impostazione predefinita
+       min-width:auto impedisce di restringersi sotto la larghezza del testo
+       non mandato a capo: su schermi stretti il container sfonda il padre. */
+    min-width: 0;
 }
 
 .section-padding {
@@ -190,4 +194,279 @@ img.footer-logo {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #444;
+}
+/* ══════════════════════════════════════════════════════════════
+   NAVIGAZIONE (unica, condivisa da tutte le pagine via <SiteNav />)
+   ══════════════════════════════════════════════════════════════ */
+.navbar {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.nav-logo-img {
+    height: 50px;
+    display: block;
+}
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.nav-links a {
+    position: relative;
+    padding: 0.5rem 0;
+    transition: color 0.3s ease;
+}
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-teal);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-links a:hover,
+.nav-links a.active-link {
+    color: var(--accent-teal);
+}
+.nav-links a:hover::after,
+.nav-links a.active-link::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Hamburger: nascosto sopra il breakpoint, mostrato sotto. */
+.nav-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-right: -12px;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+.nav-mobile-panel {
+    display: none;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MOBILE — sotto i 900px il menu diventa un pannello a schermo intero
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+    .nav-links {
+        display: none;
+    }
+    .nav-toggle {
+        display: inline-flex;
+    }
+    .nav-mobile-panel {
+        display: flex;
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 1.5rem 1.5rem 3rem;
+        background: rgba(10, 10, 10, 0.98);
+        backdrop-filter: blur(16px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        z-index: 1100;
+    }
+    .nav-mobile-panel[hidden] {
+        display: none;
+    }
+    .nav-mobile-panel a {
+        display: block;
+        padding: 1.1rem 0.25rem;
+        font-size: 1.15rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .nav-mobile-panel a.active-link {
+        color: var(--accent-teal);
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   REGOLE MOBILI GLOBALI
+   ══════════════════════════════════════════════════════════════ */
+
+/* Il sito nasconde il puntatore e ne disegna uno finto seguendo il mouse.
+   Su touch non c'è mouse: i due div restavano fermi in alto a sinistra,
+   visibili come un cerchio azzurro. Qui si ripristina il cursore di
+   sistema e si eliminano gli elementi finti. */
+@media (hover: none), (pointer: coarse) {
+    *,
+    .btn,
+    a,
+    button {
+        cursor: auto !important;
+    }
+    .custom-cursor,
+    .cursor-follower {
+        display: none !important;
+    }
+}
+
+/* Nessun elemento deve poter allargare la pagina in orizzontale. */
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Media e tabelle non sfondano mai il contenitore. */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 900px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+    .section-padding {
+        padding-top: 64px;
+        padding-bottom: 64px;
+    }
+    /* Le griglie a più colonne collassano su una sola. */
+    .grid-2,
+    .grid-3,
+    .grid-4,
+    .grid-2-valign,
+    .grid-footer {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 0 1.25rem;
+    }
+    .section-padding {
+        padding-top: 52px;
+        padding-bottom: 52px;
+    }
+    /* Titoli: su schermi stretti le dimensioni desktop tagliano le parole.
+       Il prefisso "body" serve ad alzare la specificita': i <style> delle
+       pagine vengono inseriti dopo questo foglio e altrimenti vincerebbero. */
+    body .hero-main-title {
+        font-size: clamp(2rem, 9vw, 2.8rem);
+        line-height: 1.12;
+    }
+    body .section-title {
+        font-size: clamp(1.7rem, 7.5vw, 2.2rem);
+        line-height: 1.2;
+    }
+    body .hero-subtitle,
+    body .lead-text {
+        font-size: 1rem;
+    }
+    body .body-text {
+        font-size: 0.95rem;
+    }
+    /* Su schermo stretto ogni testo deve poter andare a capo. */
+    body .nowrap-wide {
+        white-space: normal;
+    }
+    /* Parole lunghe (URL, nomi tecnici) vanno spezzate invece di sfondare. */
+    h1, h2, h3, h4, p, li, dd, a {
+        overflow-wrap: break-word;
+    }
+    /* I bottoni diventano bersagli toccabili e non escono dallo schermo. */
+    .btn {
+        min-height: 48px;
+        padding: 0.9rem 1.6rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Il carosello dei settori in home scorre in orizzontale: sotto i 600px
+   mostra una scheda alla volta invece di due strette e illeggibili. */
+@media (max-width: 600px) {
+    .sectors-carousel > .sector-card {
+        flex: 0 0 86% !important;
+    }
+}
+
+/* Bersagli di tocco: su touch ogni comando deve arrivare a 44px di altezza,
+   la soglia sotto la quale il dito sbaglia. Si allarga l'area cliccabile
+   con il padding, senza ingrandire il testo. */
+@media (hover: none), (pointer: coarse) {
+    .read-more,
+    .back-link,
+    .map-open,
+    .download-btn,
+    .network-toggle,
+    .social-links a,
+    .footer-links a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+    }
+    .social-links a,
+    .footer-links a {
+        padding: 0.35rem 0;
+    }
+    .network-toggle,
+    .map-open {
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
+    }
+}
+
+/* Sopra i 600px il gruppo resta su una riga sola, come da disegno. */
+@media (min-width: 601px) {
+    .nowrap-wide {
+        white-space: nowrap;
+    }
+}
+
+/* La home fissa il logo dell'hero a un minimo di 500px: su un telefono da
+   390px sfonda. Qui la larghezza torna proporzionale alla finestra. */
+@media (max-width: 900px) {
+    body .hero-logo-img {
+        width: min(62vw, 330px);
+    }
+}
+@media (max-width: 600px) {
+    body .hero-logo-img {
+        width: min(68vw, 260px);
+    }
+    /* L'hero a tutta altezza su mobile lascia poco spazio al contenuto sotto. */
+    body .hero {
+        height: 88vh;
+        min-height: 520px;
+    }
 }
