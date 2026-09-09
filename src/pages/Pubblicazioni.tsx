@@ -173,7 +173,8 @@ export function Pubblicazioni() {
               </h1>
               <p className="hero-subtitle">
                 Una raccolta dei lavori scientifici prodotti dai nostri ricercatori,
-                pubblicati su riviste internazionali peer-reviewed. Scarica liberamente i PDF.
+                pubblicati su riviste internazionali peer-reviewed. I documenti disponibili
+                sono scaricabili liberamente.
               </p>
             </motion.div>
           </div>
@@ -330,7 +331,10 @@ export function Pubblicazioni() {
                       <p className="pub-meta">
                         {pub.authors.length > 0 && (
                           <>
-                            <span className="pub-authors">{pub.authors.join(', ')}</span>
+                            <span className="pub-authors">
+                              {pub.authors.join(', ')}
+                              {pub.etAl && ' et al.'}
+                            </span>
                             <span className="pub-dot">·</span>
                           </>
                         )}
@@ -350,7 +354,7 @@ export function Pubblicazioni() {
                           <ExternalLink size={16} />
                           <span>Vai alla pubblicazione</span>
                         </a>
-                      ) : (
+                      ) : pub.pdfUrl ? (
                         <a
                           href={pub.pdfUrl}
                           download
@@ -360,6 +364,8 @@ export function Pubblicazioni() {
                           <Download size={16} />
                           <span>Scarica PDF</span>
                         </a>
+                      ) : (
+                        <span className="pub-no-doc">Documento non disponibile</span>
                       )}
                     </div>
                   </motion.li>
@@ -480,6 +486,8 @@ export function Pubblicazioni() {
         .pub-action { display: flex; align-items: center; }
         .download-btn { display: inline-flex; align-items: center; gap: 0.55rem; background: var(--accent-teal); color: var(--bg-primary); padding: 0.85rem 1.4rem; border-radius: 999px; font-size: 0.82rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; transition: transform 0.3s, box-shadow 0.3s, background 0.3s; white-space: nowrap; }
         .download-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(35,172,181,0.35); }
+        /* Voci senza PDF né link: nessun pulsante, solo una nota discreta. */
+        .pub-no-doc { font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-secondary); opacity: 0.75; white-space: nowrap; }
 
         .empty-state { text-align: center; padding: 5rem 1rem; color: var(--text-secondary); }
 

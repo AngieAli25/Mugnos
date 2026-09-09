@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useParams, Link, Navigate } from 'react-router-dom'
@@ -11,6 +11,9 @@ import {
   Award,
   ChevronLeft,
   ChevronRight,
+  ExternalLink,
+  Maximize2,
+  X,
 } from 'lucide-react'
 import { findEvent, EVENTS } from '../data/events'
 import { SiteNav } from '../components/SiteNav'
@@ -25,7 +28,10 @@ export function EventoDetail() {
   const cursorRef = useRef<HTMLDivElement>(null)
   const followerRef = useRef<HTMLDivElement>(null)
   const carouselRef = useRef<HTMLDivElement>(null)
+  const dragStartX = useRef(0)
   const [slide, setSlide] = useState(0)
+  /** Indice dell'immagine aperta a schermo pieno, null se il lightbox è chiuso. */
+  const [zoom, setZoom] = useState<number | null>(null)
   const [visible, setVisible] = useState<number>(() => {
     if (typeof window === 'undefined') return 3
     if (window.innerWidth <= 700) return 1
@@ -44,6 +50,17 @@ export function EventoDetail() {
 
   const length = event?.gallery.length ?? 0
   const maxSlide = Math.max(0, length - visible)
+  const zoomOpen = zoom !== null
+
+  const closeZoom = useCallback(() => setZoom(null), [])
+  const prevZoom = useCallback(
+    () => setZoom((z) => (z === null ? z : (z - 1 + length) % length)),
+    [length]
+  )
+  const nextZoom = useCallback(
+    () => setZoom((z) => (z === null ? z : (z + 1) % length)),
+    [length]
+  )
 
   useEffect(() => {
     setSlide((s) => Math.min(s, maxSlide))
@@ -82,6 +99,33 @@ export function EventoDetail() {
     return () => window.removeEventListener('mousemove', move)
   }, [])
 
+  // Il carosello segue il lightbox: alla chiusura l'immagine vista è già in vista.
+  useEffect(() => {
+    if (zoom === null) return
+    setSlide((s) => {
+      let next = s
+      if (zoom < s) next = zoom
+      else if (zoom > s + visible - 1) next = zoom - visible + 1
+      return Math.min(Math.max(0, next), maxSlide)
+    })
+  }, [zoom, visible, maxSlide])
+
+  useEffect(() => {
+    if (!zoomOpen) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeZoom()
+      else if (e.key === 'ArrowLeft') prevZoom()
+      else if (e.key === 'ArrowRight') nextZoom()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = previousOverflow
+    }
+  }, [zoomOpen, closeZoom, prevZoom, nextZoom])
+
   const prevSlide = useCallback(() => {
     setSlide((i) => Math.max(0, i - 1))
   }, [])
@@ -92,6 +136,7 @@ export function EventoDetail() {
   useEffect(() => {
     if (!event) return
     const onKey = (e: KeyboardEvent) => {
+      if (zoomOpen) return
       if (!carouselRef.current) return
       const rect = carouselRef.current.getBoundingClientRect()
       const inView = rect.top < window.innerHeight && rect.bottom > 0
@@ -101,7 +146,7 @@ export function EventoDetail() {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [event, prevSlide, nextSlide])
+  }, [event, prevSlide, nextSlide, zoomOpen])
 
   if (!event) {
     return <Navigate to="/eventi" replace />
@@ -168,11 +213,22 @@ export function EventoDetail() {
               {event.description.map((p, i) => (
                 <p key={i} className="info-p">{p}</p>
               ))}
+              {event.link && (
+                <a
+                  href={event.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="event-site-link"
+                >
+                  <ExternalLink size={15} /> <span>Sito dell’evento</span>
+                </a>
+              )}
             </div>
           </div>
         </section>
 
-        {/* GALLERY CAROUSEL */}
+        {/* GALLERY CAROUSEL — solo se ci sono foto oltre alla locandina */}
+        {length > 0 && (
         <section className="section-padding" style={{ background: 'var(--bg-secondary)' }}>
           <div className="container">
             <div className="gallery-header reveal">
@@ -184,7 +240,7 @@ export function EventoDetail() {
               <div className="carousel-viewport">
                 <motion.div
                   className="carousel-track"
-                  animate={{ x: `${length === 0 ? 0 : (-slide * 100) / length}%` }}
+                  animate={{ x: `${(-slide * 100) / visible}%` }}
                   transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                   drag="x"
                   dragConstraints={{ left: 0, right: 0 }}
@@ -200,7 +256,24 @@ export function EventoDetail() {
                       className="carousel-slide"
                       style={{ flex: `0 0 ${100 / visible}%` }}
                     >
-                      <img src={img} alt={`${event.title} — immagine ${i + 1}`} loading="lazy" draggable={false} />
+                      <button
+                        type="button"
+                        className="carousel-slide-btn"
+                        onPointerDown={(e) => {
+                          dragStartX.current = e.clientX
+                        }}
+                        onClick={(e) => {
+                          // Dopo un trascinamento il click va ignorato: è uno scorrimento, non un tap.
+                          if (e.detail !== 0 && Math.abs(e.clientX - dragStartX.current) > 8) return
+                          setZoom(i)
+                        }}
+                        aria-label={`Ingrandisci immagine ${i + 1} di ${length}`}
+                      >
+                        <img src={img} alt={`${event.title} — immagine ${i + 1}`} loading="lazy" draggable={false} />
+                        <span className="carousel-slide-zoom" aria-hidden="true">
+                          <Maximize2 size={16} />
+                        </span>
+                      </button>
                     </div>
                   ))}
                 </motion.div>
@@ -222,6 +295,7 @@ export function EventoDetail() {
             </div>
           </div>
         </section>
+        )}
 
         {/* RELATED */}
         {relatedEvents.length > 0 && (
@@ -280,6 +354,80 @@ export function EventoDetail() {
         </footer>
       </main>
 
+      {/* LIGHTBOX: immagine ingrandita, scorribile con frecce, tastiera o swipe */}
+      <AnimatePresence>
+        {zoomOpen && (
+          <motion.div
+            className="lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={closeZoom}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${event.title} — immagine ${(zoom ?? 0) + 1} di ${length}`}
+          >
+            <button className="lightbox-close" onClick={closeZoom} aria-label="Chiudi">
+              <X size={20} />
+            </button>
+
+            {length > 1 && (
+              <button
+                className="lightbox-nav lightbox-prev"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  prevZoom()
+                }}
+                aria-label="Immagine precedente"
+              >
+                <ChevronLeft size={24} />
+              </button>
+            )}
+
+            <motion.div
+              className="lightbox-stage"
+              onClick={(e) => e.stopPropagation()}
+              drag={length > 1 ? 'x' : false}
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(_, info) => {
+                if (info.offset.x < -70) nextZoom()
+                else if (info.offset.x > 70) prevZoom()
+              }}
+            >
+              <motion.img
+                key={zoom}
+                src={event.gallery[zoom ?? 0]}
+                alt={`${event.title} — immagine ${(zoom ?? 0) + 1}`}
+                className="lightbox-image"
+                draggable={false}
+                initial={{ opacity: 0, scale: 0.985 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              />
+            </motion.div>
+
+            {length > 1 && (
+              <button
+                className="lightbox-nav lightbox-next"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  nextZoom()
+                }}
+                aria-label="Immagine successiva"
+              >
+                <ChevronRight size={24} />
+              </button>
+            )}
+
+            <div className="lightbox-counter">
+              {String((zoom ?? 0) + 1).padStart(2, '0')} / {String(length).padStart(2, '0')}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <style>{`
         /* NAVBAR */
 
@@ -290,8 +438,9 @@ export function EventoDetail() {
         .back-link:hover { color: var(--accent-teal); gap: 0.7rem; }
         .detail-hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 4rem; align-items: center; }
         .detail-hero-text { min-width: 0; }
-        .detail-hero-image { aspect-ratio: 4 / 3; border-radius: 16px; overflow: hidden; background: #111; }
-        .detail-hero-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        /* Locandina dell’evento: mostrata intera su lastra chiara, mai ritagliata. */
+        .detail-hero-image { aspect-ratio: 4 / 3; border-radius: 16px; overflow: hidden; background: #ededed; }
+        .detail-hero-image img { width: 100%; height: 100%; object-fit: contain; display: block; }
         .hero-category { display: inline-block; color: var(--accent-teal); font-size: 0.72rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1.25rem; padding: 0.35rem 0.9rem; background: rgba(35,172,181,0.1); border: 1px solid rgba(35,172,181,0.25); border-radius: 999px; }
         .hero-title { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; margin: 0 0 1.5rem; }
         .hero-meta { display: flex; flex-wrap: wrap; gap: 1.5rem 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
@@ -310,15 +459,35 @@ export function EventoDetail() {
         .info-p { margin: 0 0 1.4rem; }
         .info-p:last-child { margin-bottom: 0; }
 
+        .event-site-link { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; color: var(--accent-teal); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px; border-bottom: 1px solid rgba(35,172,181,0.35); padding-bottom: 0.15rem; transition: border-color 0.3s, gap 0.3s; }
+        .event-site-link:hover { border-bottom-color: var(--accent-teal); gap: 0.7rem; }
+
         /* GALLERY CAROUSEL */
         .gallery-header { margin-bottom: 3rem; }
         .carousel-viewport { overflow: hidden; }
         .carousel-track { display: flex; will-change: transform; cursor: grab; user-select: none; }
         .carousel-track:active { cursor: grabbing; }
+        /* Padding uguale su ogni slide: così tutte hanno la stessa larghezza mentre si scorre. */
         .carousel-slide { padding: 0 0.5rem; box-sizing: border-box; }
-        .carousel-slide:first-child { padding-left: 0; }
-        .carousel-slide:last-child { padding-right: 0; }
-        .carousel-slide img { width: 100%; height: 320px; object-fit: cover; display: block; border-radius: 12px; background: #111; }
+        .carousel-slide-btn { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 12px; overflow: hidden; -webkit-tap-highlight-color: transparent; }
+        .carousel-slide img { width: 100%; height: 320px; object-fit: cover; display: block; border-radius: 12px; background: #111; transition: transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+        .carousel-slide-btn:hover img, .carousel-slide-btn:focus-visible img { transform: scale(1.04); }
+        .carousel-slide-btn:focus-visible { outline: 2px solid var(--accent-teal); outline-offset: 3px; }
+        .carousel-slide-zoom { position: absolute; bottom: 0.75rem; right: 0.75rem; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(10,10,10,0.75); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.14); color: var(--white); opacity: 0; transform: translateY(6px); transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease, border-color 0.3s ease; }
+        .carousel-slide-btn:hover .carousel-slide-zoom, .carousel-slide-btn:focus-visible .carousel-slide-zoom { opacity: 1; transform: translateY(0); }
+        .carousel-slide-zoom:hover { background: var(--accent-teal); border-color: var(--accent-teal); color: #0a0a0a; }
+
+        /* LIGHTBOX */
+        .lightbox { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 4.5rem 5.5rem; background: rgba(8,8,8,0.975); backdrop-filter: blur(10px); }
+        .lightbox-stage { display: flex; align-items: center; justify-content: center; max-width: 100%; }
+        .lightbox-image { display: block; width: auto; height: auto; max-width: calc(100vw - 11rem); max-height: calc(100vh - 9rem); max-height: calc(100dvh - 9rem); object-fit: contain; border-radius: 8px; user-select: none; box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
+        .lightbox-close { position: absolute; top: 1.25rem; right: 1.5rem; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.16); color: var(--white); transition: background 0.3s, border-color 0.3s, color 0.3s; }
+        .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.16); color: var(--white); transition: background 0.3s, border-color 0.3s, color 0.3s; }
+        .lightbox-close:hover, .lightbox-nav:hover { background: rgba(35,172,181,0.18); border-color: var(--accent-teal); color: var(--accent-teal); }
+        .lightbox-close:focus-visible, .lightbox-nav:focus-visible { outline: 2px solid var(--accent-teal); outline-offset: 3px; }
+        .lightbox-prev { left: 1.5rem; }
+        .lightbox-next { right: 1.5rem; }
+        .lightbox-counter { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); font-family: var(--font-serif), Georgia, serif; font-size: 0.95rem; letter-spacing: 2px; color: rgba(255,255,255,0.75); }
         .carousel-controls { display: flex; align-items: center; justify-content: center; gap: 1.25rem; margin-top: 2rem; }
         .carousel-arrow { width: 46px; height: 46px; border-radius: 50%; background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--white); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.3s, border-color 0.3s, color 0.3s; }
         .carousel-arrow:hover:not(:disabled) { background: rgba(35,172,181,0.15); border-color: var(--accent-teal); color: var(--accent-teal); }
@@ -329,9 +498,9 @@ export function EventoDetail() {
         .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
         .related-card { display: flex; flex-direction: column; gap: 1rem; color: inherit; text-decoration: none; transition: transform 0.5s cubic-bezier(0.16,1,0.3,1); }
         .related-card:hover { transform: translateY(-5px); }
-        .related-image-wrap { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 12px; background: #111; }
-        .related-image-wrap img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.6) brightness(0.85); transition: transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.6s ease; }
-        .related-card:hover .related-image-wrap img { transform: scale(1.06); filter: grayscale(0) brightness(1); }
+        .related-image-wrap { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 12px; background: #ededed; }
+        .related-image-wrap img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+        .related-card:hover .related-image-wrap img { transform: scale(1.02); }
         .related-body { display: flex; flex-direction: column; gap: 0.4rem; }
         .related-year { color: var(--accent-teal); font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-family: var(--font-serif); }
         .related-title { font-size: 1.15rem; margin: 0; line-height: 1.3; }
@@ -360,6 +529,13 @@ export function EventoDetail() {
           .related-grid, .grid-footer { grid-template-columns: 1fr; gap: 2rem; }
           .carousel-slide { padding: 0; }
           .carousel-slide img { height: 240px; border-radius: 10px; }
+          .carousel-slide-zoom { opacity: 1; transform: none; }
+          .lightbox { padding: 4rem 0.75rem 5.75rem; }
+          .lightbox-image { max-width: calc(100vw - 1.5rem); max-height: calc(100vh - 10rem); max-height: calc(100dvh - 10rem); }
+          .lightbox-nav { top: auto; bottom: 1rem; transform: none; width: 46px; height: 46px; }
+          .lightbox-prev { left: 1rem; }
+          .lightbox-next { right: 1rem; }
+          .lightbox-counter { bottom: 1.85rem; }
         }
       `}</style>
     </div>

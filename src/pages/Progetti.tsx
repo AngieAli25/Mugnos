@@ -338,7 +338,6 @@ export function Progetti() {
                     <Link to={`/progetti/${project.id}`} className="project-card-link">
                       <div className="project-image-wrap">
                         <img src={project.cover} alt={project.title} className="project-image" loading="lazy" />
-                        <div className="project-image-overlay" />
                         <span className="project-year">{project.year}</span>
                       </div>
                       <div className="project-body">
@@ -485,7 +484,6 @@ export function Progetti() {
            anche a riposo. Sull'hover resta il solo movimento di scala. */
         .project-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1); }
         .project-card:hover .project-image { transform: scale(1.06); }
-        .project-image-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(10,10,10,0.55) 100%); pointer-events: none; }
         .project-year { position: absolute; top: 1rem; right: 1rem; background: rgba(10,10,10,0.85); backdrop-filter: blur(8px); color: var(--accent-teal); font-family: var(--font-serif); font-size: 0.95rem; font-weight: 700; padding: 0.35rem 0.75rem; border-radius: 6px; letter-spacing: 0.5px; border: 1px solid rgba(35,172,181,0.25); }
         .project-body { padding: 1.75rem; display: flex; flex-direction: column; gap: 0.85rem; flex: 1; }
         .project-category { color: var(--accent-teal); font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }

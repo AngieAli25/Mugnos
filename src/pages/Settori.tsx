@@ -442,8 +442,7 @@ export function Settori() {
         .sector-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
         .sector-img-frame { position: relative; border-radius: 20px; overflow: hidden; height: 560px; }
         .sector-img-parallax { position: absolute; inset: -20% 0 -20% 0; will-change: transform; }
-        .sector-img-inner { position: absolute; inset: 0; background-size: cover; background-position: center; filter: grayscale(1) brightness(0.7); transition: filter 0.5s ease; }
-        .sector-img-frame:hover .sector-img-inner { filter: grayscale(0) brightness(0.95); }
+        .sector-img-inner { position: absolute; inset: 0; background-size: cover; background-position: center; }
         .sector-img-badge { position: absolute; bottom: 1.5rem; left: 1.5rem; background: rgba(10,10,10,0.88); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 0.6rem 1.2rem; }
         .sector-number { font-size: 1.4rem; font-weight: 700; font-family: var(--font-serif); color: var(--accent-teal); }
         .sector-icon-wrap { color: var(--accent-teal); margin-bottom: 1.5rem; }

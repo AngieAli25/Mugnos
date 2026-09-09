@@ -320,7 +320,6 @@ export function Eventi() {
                     <Link to={`/eventi/${event.id}`} className="event-card-link">
                       <div className="event-image-wrap">
                         <img src={event.cover} alt={event.title} className="event-image" loading="lazy" />
-                        <div className="event-image-overlay" />
                         <span className="event-type-badge">{event.type}</span>
                       </div>
                       <div className="event-body">
@@ -460,10 +459,11 @@ export function Eventi() {
         .event-card { display: flex; flex-direction: column; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.5s; }
         .event-card:hover { transform: translateY(-6px); border-color: rgba(35,172,181,0.35); }
         .event-card-link { display: flex; flex-direction: column; height: 100%; color: inherit; text-decoration: none; }
-        .event-image-wrap { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #111; }
-        .event-image { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.6) brightness(0.85); transition: transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.6s ease; }
-        .event-card:hover .event-image { transform: scale(1.06); filter: grayscale(0) brightness(1); }
-        .event-image-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(10,10,10,0.55) 100%); pointer-events: none; }
+        /* Le copertine degli eventi sono locandine con testo: si mostrano intere (contain)
+           su una lastra chiara, non ritagliate, altrimenti si perdono titolo e date. */
+        .event-image-wrap { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #ededed; }
+        .event-image { width: 100%; height: 100%; object-fit: contain; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+        .event-card:hover .event-image { transform: scale(1.02); }
         .event-type-badge { position: absolute; top: 1rem; left: 1rem; background: rgba(10,10,10,0.85); backdrop-filter: blur(8px); color: var(--accent-teal); font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 0.35rem 0.75rem; border-radius: 6px; border: 1px solid rgba(35,172,181,0.25); }
         .event-body { padding: 1.5rem 1.75rem 1.75rem; display: flex; flex-direction: column; gap: 0.85rem; flex: 1; }
         .event-title { font-size: 1.2rem; line-height: 1.3; margin: 0; color: var(--white); font-weight: 600; }

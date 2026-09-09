@@ -782,8 +782,8 @@ export function Home() {
           position: relative;
         }
         .sector-image { height: 250px; position: relative; overflow: hidden; }
-        .sector-img-base { position: absolute; inset: 0; background-size: cover; background-position: center; filter: grayscale(1) brightness(0.7); transition: filter 0.5s ease, transform 0.6s cubic-bezier(0.16,1,0.3,1); }
-        .sector-card:hover .sector-img-base { filter: grayscale(0) brightness(0.95); transform: scale(1.05); }
+        .sector-img-base { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+        .sector-card:hover .sector-img-base { transform: scale(1.05); }
         .sector-info {
           padding: 2rem;
         }

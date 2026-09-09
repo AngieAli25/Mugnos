@@ -591,8 +591,7 @@ export function Studio() {
         .founder-grid.reversed .founder-text { order: 1; }
         .founder-grid.reversed .founder-img-wrap { order: 2; }
         .founder-img-frame { position: relative; border-radius: 20px; overflow: hidden; height: 620px; }
-        .founder-image { width: 100%; height: 140%; object-fit: cover; display: block; filter: grayscale(0.6) brightness(0.75); transition: filter 0.6s ease; will-change: transform; }
-        .founder-image:hover { filter: grayscale(0) brightness(1); }
+        .founder-image { width: 100%; height: 140%; object-fit: cover; display: block; will-change: transform; }
         .cv-items { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
         .cv-item { padding: 1.5rem 2rem; will-change: transform; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
         .cv-item strong { display: block; color: var(--accent-teal); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.5rem; font-family: var(--font-sans); }
