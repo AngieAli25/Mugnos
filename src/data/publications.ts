@@ -16,7 +16,7 @@ export type Publication = {
 // Dati estratti dai PDF originali (cartella Drive delle pubblicazioni dello Studio).
 // Autori, titoli e sedi editoriali sono presi dai documenti, non ricostruiti.
 
-export const PUBLICATIONS: Publication[] = [
+const SOURCE_PUBLICATIONS: Publication[] = [
   {
     id: 'a-simplified-numericalexperimental-framework-for-seismic-fragility-ass-2026',
     title: 'A simplified numerical–experimental framework for seismic fragility assessment of high-voltage transformers',
@@ -886,3 +886,22 @@ export const PUBLICATIONS: Publication[] = [
     pdfUrl: '/publications/telai-di-contrasto-per-la-verifica-sperimentale-di-componenti-struttur-1996.pdf',
   },
 ]
+
+/** Titolari dello Studio: i loro nomi vanno sempre in testa alla lista autori. */
+export const PARTNER_MUGNOS = 'Giuseppe Mugnos'
+export const PARTNER_LO_GIUDICE = 'Elio Lo Giudice'
+const PARTNERS: string[] = [PARTNER_MUGNOS, PARTNER_LO_GIUDICE]
+
+// I titolari passano in testa nell'ordine di PARTNERS; gli altri coautori
+// conservano l'ordine con cui compaiono sul documento originale.
+function withPartnersFirst(authors: string[]): string[] {
+  return [
+    ...PARTNERS.filter((partner) => authors.includes(partner)),
+    ...authors.filter((author) => !PARTNERS.includes(author)),
+  ]
+}
+
+export const PUBLICATIONS: Publication[] = SOURCE_PUBLICATIONS.map((pub) => ({
+  ...pub,
+  authors: withPartnersFirst(pub.authors),
+}))

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Phone, MapPin, Download, ArrowDown, Search, X, ExternalLink } from 'lucide-react'
-import { PUBLICATIONS } from '../data/publications'
+import { PUBLICATIONS, PARTNER_LO_GIUDICE, PARTNER_MUGNOS } from '../data/publications'
 import { SiteNav } from '../components/SiteNav'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -16,25 +16,32 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: 'az', label: 'Alfabetico A–Z' },
 ]
 
+/** Il cliente vuole filtrare solo per i titolari dello Studio, non per tutti i coautori. */
+type AuthorKey = 'lo-giudice' | 'mugnos' | 'entrambi'
+
+const AUTHOR_OPTIONS: { key: AuthorKey; label: string }[] = [
+  { key: 'lo-giudice', label: PARTNER_LO_GIUDICE },
+  { key: 'mugnos', label: PARTNER_MUGNOS },
+  { key: 'entrambi', label: 'Firmate da entrambi' },
+]
+
 type Filters = {
   search: string
   year: number | null
-  tag: string | null
   venue: string | null
-  author: string | null
+  author: AuthorKey | null
   sort: SortKey
 }
 
 const INITIAL_FILTERS: Filters = {
   search: '',
   year: null,
-  tag: null,
   venue: null,
   author: null,
   sort: 'recent',
 }
 
-type MenuKey = 'year' | 'tag' | 'venue' | 'author' | 'sort'
+type MenuKey = 'year' | 'venue' | 'author' | 'sort'
 
 export function Pubblicazioni() {
   const mainRef = useRef<HTMLDivElement>(null)
@@ -49,23 +56,9 @@ export function Pubblicazioni() {
     () => Array.from(new Set(PUBLICATIONS.map((p) => p.year))).sort((a, b) => b - a),
     []
   )
-  const tags = useMemo(
-    () =>
-      Array.from(new Set(PUBLICATIONS.flatMap((p) => p.tags))).sort((a, b) =>
-        a.localeCompare(b, 'it')
-      ),
-    []
-  )
   const venues = useMemo(
     () =>
       Array.from(new Set(PUBLICATIONS.map((p) => p.venue))).sort((a, b) =>
-        a.localeCompare(b, 'it')
-      ),
-    []
-  )
-  const authors = useMemo(
-    () =>
-      Array.from(new Set(PUBLICATIONS.flatMap((p) => p.authors))).sort((a, b) =>
         a.localeCompare(b, 'it')
       ),
     []
@@ -75,11 +68,16 @@ export function Pubblicazioni() {
     const q = filters.search.trim().toLowerCase()
     const base = PUBLICATIONS.filter((p) => {
       if (filters.year !== null && p.year !== filters.year) return false
-      if (filters.tag && !p.tags.includes(filters.tag)) return false
       if (filters.venue && p.venue !== filters.venue) return false
-      if (filters.author && !p.authors.includes(filters.author)) return false
+      if (filters.author) {
+        const loGiudice = p.authors.includes(PARTNER_LO_GIUDICE)
+        const mugnos = p.authors.includes(PARTNER_MUGNOS)
+        if (filters.author === 'lo-giudice' && !loGiudice) return false
+        if (filters.author === 'mugnos' && !mugnos) return false
+        if (filters.author === 'entrambi' && !(loGiudice && mugnos)) return false
+      }
       if (q) {
-        const hay = `${p.title} ${p.authors.join(' ')} ${p.venue} ${p.tags.join(' ')}`.toLowerCase()
+        const hay = `${p.title} ${p.authors.join(' ')} ${p.venue}`.toLowerCase()
         if (!hay.includes(q)) return false
       }
       return true
@@ -102,7 +100,6 @@ export function Pubblicazioni() {
   const hasActiveFilters =
     filters.search.trim() !== '' ||
     filters.year !== null ||
-    filters.tag !== null ||
     filters.venue !== null ||
     filters.author !== null
 
@@ -216,20 +213,6 @@ export function Pubblicazioni() {
                   }}
                 />
                 <FilterDropdown
-                  label="Argomento"
-                  value={filters.tag}
-                  open={openMenu === 'tag'}
-                  onToggle={() => toggleMenu('tag')}
-                  options={[
-                    { value: null, label: 'Tutti gli argomenti' },
-                    ...tags.map((t) => ({ value: t, label: t })),
-                  ]}
-                  onSelect={(v) => {
-                    updateFilter('tag', v)
-                    setOpenMenu(null)
-                  }}
-                />
-                <FilterDropdown
                   label="Rivista"
                   value={filters.venue}
                   open={openMenu === 'venue'}
@@ -245,15 +228,15 @@ export function Pubblicazioni() {
                 />
                 <FilterDropdown
                   label="Autore"
-                  value={filters.author}
+                  value={AUTHOR_OPTIONS.find((a) => a.key === filters.author)?.label ?? null}
                   open={openMenu === 'author'}
                   onToggle={() => toggleMenu('author')}
                   options={[
                     { value: null, label: 'Tutti gli autori' },
-                    ...authors.map((a) => ({ value: a, label: a })),
+                    ...AUTHOR_OPTIONS.map((a) => ({ value: a.key, label: a.label })),
                   ]}
                   onSelect={(v) => {
-                    updateFilter('author', v)
+                    updateFilter('author', v as AuthorKey | null)
                     setOpenMenu(null)
                   }}
                 />
@@ -281,14 +264,14 @@ export function Pubblicazioni() {
                   {filters.year !== null && (
                     <ActiveChip label={`Anno: ${filters.year}`} onRemove={() => updateFilter('year', null)} />
                   )}
-                  {filters.tag && (
-                    <ActiveChip label={`Argomento: ${filters.tag}`} onRemove={() => updateFilter('tag', null)} />
-                  )}
                   {filters.venue && (
                     <ActiveChip label={`Rivista: ${filters.venue}`} onRemove={() => updateFilter('venue', null)} />
                   )}
                   {filters.author && (
-                    <ActiveChip label={`Autore: ${filters.author}`} onRemove={() => updateFilter('author', null)} />
+                    <ActiveChip
+                      label={`Autore: ${AUTHOR_OPTIONS.find((a) => a.key === filters.author)?.label}`}
+                      onRemove={() => updateFilter('author', null)}
+                    />
                   )}
                   <button className="reset-btn" onClick={resetFilters}>
                     <X size={13} /> Reset filtri
