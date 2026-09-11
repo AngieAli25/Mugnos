@@ -188,6 +188,22 @@ export const EVENTS: EngineeringEvent[] = [
     link: 'https://www.collegiotecniciacciaio.it/congressi/presentazione/',
   },
   {
+    id: 'aimeta-brescia-2026',
+    title: 'XXVII Congresso Nazionale AIMETA – Associazione Italiana di Meccanica Teorica e Applicata',
+    type: 'Congresso Nazionale',
+    location: 'Brescia',
+    country: 'Italia',
+    date: 'Settembre 2026',
+    year: 2026,
+    role: 'Relatori',
+    cover: '/images/eventi/aimeta-brescia-2026/cover.jpg',
+    gallery: [],
+    description: [
+      'Il XXVII Congresso AIMETA ha riunito oltre 300 esperti per discutere le più recenti innovazioni nel campo della meccanica. Il programma si è sviluppato attraverso Sessioni Tematiche dedicate ai solidi e alle strutture, alla fluidodinamica, alla meccanica generale e alle macchine, insieme a MiniSimposi specialistici su metodi computazionali avanzati, dinamica e monitoraggio strutturale, tribologia, biomeccanica e materiali innovativi. La giornata inaugurale ha posto l’accento sul rapporto tra ricerca e industria, con un focus sull’eccellenza meccanica bresciana, la transizione ecologica dell’automotive e le prospettive della filiera ingegneristica lombarda.',
+    ],
+    link: 'https://brescia2026.aimeta.it/',
+  },
+  {
     id: 'workshop-dismat-canicatti-2025',
     title: '4° Workshop Ingegneria Strutturale',
     type: 'Workshop Nazionale',
@@ -421,6 +437,45 @@ export const EVENTS: EngineeringEvent[] = [
     ],
   },
 ]
+
+const MESI = [
+  'gennaio',
+  'febbraio',
+  'marzo',
+  'aprile',
+  'maggio',
+  'giugno',
+  'luglio',
+  'agosto',
+  'settembre',
+  'ottobre',
+  'novembre',
+  'dicembre',
+]
+
+/**
+ * Mese d'inizio ricavato dal campo `date` ("Giugno 2026", "Settembre-Ottobre 2026"):
+ * 1–12, oppure 0 se nella stringa non compare un mese riconoscibile.
+ */
+export function eventMonth(event: EngineeringEvent): number {
+  const date = event.date.toLowerCase()
+  let month = 0
+  let firstIndex = Infinity
+  MESI.forEach((nome, i) => {
+    const pos = date.indexOf(nome)
+    if (pos !== -1 && pos < firstIndex) {
+      firstIndex = pos
+      month = i + 1
+    }
+  })
+  return month
+}
+
+/** Ordine cronologico crescente: prima l'anno, poi il mese. */
+export function compareEventsByDate(a: EngineeringEvent, b: EngineeringEvent): number {
+  if (a.year !== b.year) return a.year - b.year
+  return eventMonth(a) - eventMonth(b)
+}
 
 export function findEvent(id?: string): EngineeringEvent | undefined {
   return EVENTS.find((e) => e.id === id)

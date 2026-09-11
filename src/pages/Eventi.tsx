@@ -4,7 +4,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, Phone, MapPin, ArrowUpRight, ArrowDown, Calendar, Search, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { EVENTS, type EventType } from '../data/events'
+import { EVENTS, compareEventsByDate, type EventType } from '../data/events'
 import { SiteNav } from '../components/SiteNav'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -82,10 +82,10 @@ export function Eventi() {
     const sorted = [...base]
     switch (filters.sort) {
       case 'recent':
-        sorted.sort((a, b) => b.year - a.year)
+        sorted.sort((a, b) => compareEventsByDate(b, a))
         break
       case 'oldest':
-        sorted.sort((a, b) => a.year - b.year)
+        sorted.sort((a, b) => compareEventsByDate(a, b))
         break
       case 'az':
         sorted.sort((a, b) => a.title.localeCompare(b.title, 'it'))
